@@ -2,23 +2,16 @@ const express = require('express');
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('Requête reçue !');
+app.use('/accueil', (req, res, next) => {
+  const message = 'Bienvenue dans l\'accueil du serveur Express !';
+  res.status(200).json(message);
   next();
 });
 
-app.use((req, res, next) => {
-  res.status(201);
+app.use('/login', (req, res, next) => {
+  const message = 'Bienvenue la page de login du serveur Express !';
+  res.status(200).json(message);
   next();
-});
-
-app.use((req, res, next) => {
-  res.json({ message: 'Votre requête a bien été reçue !' });
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log('Réponse envoyée avec succès !');
 });
 
 module.exports = app;
