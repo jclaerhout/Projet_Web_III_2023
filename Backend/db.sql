@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS Relations (
 	id_follower INT,
 	id_followed INT,
 
-	PRIMARY KEY (id_follower, id_followed)
+	PRIMARY KEY (id_follower, id_followed),
 	FOREIGN KEY (id_follower) REFERENCES Users(id),
 	FOREIGN KEY (id_followed) REFERENCES Users(id)
 	

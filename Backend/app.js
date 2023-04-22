@@ -15,6 +15,7 @@ app.use('/accueil', (req, res, next) => {
   next();
 });
 
+// Route API qui correspond à la récupération des données users
 app.get('', async(req, res) =>{
   let conn;
   try{
