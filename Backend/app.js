@@ -16,21 +16,25 @@ app.use('/accueil', (req, res, next) => {
 });
 
 // Route API qui correspond à la récupération des données users
-app.get('', async(req, res) =>{
-  let conn;
-  try{
-    conn = await pool.getConnection();
-    const rows = await conn.query('SELECT * from users')
-    console.log(rows);
-    const jsonS = JSON.stringify(rows);
-    res.writeHead(200, {'Content-type': 'text/html'})
-    res.end(jsonS);
-  }
-  catch(e){
-    console.log(e);
-  }
-})
+function getData(route, table) {
+  app.get(route, async (req, res) => {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const rows = await conn.query(`SELECT * FROM ${table}`);
+      console.log(rows);
+      const jsonS = JSON.stringify(rows);
+      res.writeHead(200, {'Content-type': 'text/html'});
+      res.end(jsonS);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      if (conn) conn.release();
+    }
+  });
+}
 
+getData('', 'users')
 
 app.use('/login', (req, res, next) => {
   const message = 'Bienvenue la page de login du serveur Express !';
