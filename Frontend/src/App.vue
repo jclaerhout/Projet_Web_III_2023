@@ -2,6 +2,7 @@
   <div id="app">
     <router-link to="/">Accueil</router-link>
     <router-link to="/inscription">Inscription</router-link>
+    <router-link to="/connection">Se connecter</router-link>
     <router-view />
   </div>
 </template>
