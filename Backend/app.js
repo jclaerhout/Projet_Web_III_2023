@@ -1,11 +1,9 @@
 const express = require('express');
 const app = express();
 
-
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
 const path = require('path');
-
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,7 +11,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-
 
 app.use(express.json());
 
