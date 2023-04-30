@@ -21,19 +21,27 @@
     export default {
       data() {
         return {
-          users: [],
+          email : '',
+          password: ''
         };
       },
-      mounted() {
-        axios.get('http://localhost:3000/api/auth/login')
-          .then(response => {
-           // handle success
-            console.log(response.data)
-         })
-          .catch(error => {
-           // handle error
-            console.log(error)
+      methods: {
+        submitForm() {
+          // send a POST request to the server with the form data
+          axios.post('http://localhost:3000/api/auth/login', {
+            email: this.email,
+            password: this.password
           })
+          .then(response => {
+            localStorage.setItem('token', response.data.token);
+            // handle the response from the server
+            console.log(response.data);
+          })
+          .catch(error => {
+            // handle any errors that occur
+            console.error(error);
+          });
+        }
       }
     };
   
