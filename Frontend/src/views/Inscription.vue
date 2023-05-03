@@ -6,25 +6,23 @@
         @submit.prevent="onSubmit"
       >
         <v-text-field
+          id="email"
           v-model="email"
-          color="primary"
-          :readonly="loading"
-          :rules="[required]"
-          class="mb-2"
+          type="email"
           label="Email"
           variant="underlined"
+          placeholder="Enter your email"
+          :rules="[required]"
         ></v-text-field>
 
         <v-text-field
+          id="password"
           v-model="password"
           type="password"
-          color="primary"
           label="Password"
-          :readonly="loading"
-          :rules="[required]"
-          clearable
-          placeholder="Enter your password"
           variant="underlined"
+          placeholder="Enter your password"
+          :rules="[required]"
         ></v-text-field>
 
         <v-divider></v-divider>
@@ -32,18 +30,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn 
-          color="success"
-          :disabled="!form"
-          :loading="loading"
+          <v-btn
           block
+          color="hsla(160, 100%, 37%, 1)"
           size="large"
           type="submit"
           variant="elevated"
           >
             Complete Registration
-
-            <v-icon icon="mdi-chevron-right" end></v-icon>
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -57,26 +51,20 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      form: false,
       email: this.email,
       password: this.password,
-      loading: false,
     };
   },
   methods: {
-    onSubmit() {      
-      if (!this.form) return
-      this.loading = true
-      setTimeout(() => (this.loading = false), 2000)
-
+    onSubmit() {
       // send a POST request to the server with the form data
       axios.post('http://localhost:3000/api/auth/signup', {
-        name: undefined,
-        firstname: undefined,
+        name: '',
+        firstname: '',
         email: this.email,
         password: this.password,
-        location: undefined,
-        job: undefined
+        location: '',
+        job: '',
       })
       .then(response => {
         // handle the response from the server
