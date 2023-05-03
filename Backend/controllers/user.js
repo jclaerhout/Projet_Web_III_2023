@@ -18,6 +18,7 @@ exports.signup = (req, res, next) => {
                         console.error(error);
                         res.status(500).send('Erreur de sauvegarde de l utilisateur');
                     } else {
+                        console.log(results);
                         res.send('Utilisateur sauvegardé');
                     }
                     })
@@ -28,8 +29,30 @@ exports.signup = (req, res, next) => {
         });
 };
 
-exports.login = (req, res, next) => {
-    const message = 'Bienvenue la page de login du serveur Express !';
-    res.status(200).json(message);
-    next();
-  };
+exports.login = async (req, res, next) => {
+    const { email, password } = req.body;
+    let conn;
+    try{
+        conn = pool.getConnection();
+        const user = pool.query(
+            'SELECT * FROM users WHERE email = ?', [email]
+        );
+
+        if (!user.length) {
+            return res.status(400).json({ message: "L'email ou le mot de passe est incorrect." });
+        }
+
+        const match = await bcrypt.compare(password, user[0].password);
+
+        if (!match) {
+            return res.status(400).json({ message: "L'email ou le mot de passe est incorrect." });
+        }
+
+        const token = jwt.sign({ id: user[0].id }, 'your_secret_key', { expiresIn: '1h' });
+
+        return res.json({ token });
+    }
+    catch(e){
+        console.log(e);
+    }
+};

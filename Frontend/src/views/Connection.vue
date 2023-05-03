@@ -1,44 +1,96 @@
 <template>
-    <div class="connection">
-      <h1>Site de partages photos</h1>
-      <p>Formulaire d'inscription</p>
-      <form @submit.prevent="submitForm">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required>
+  <div class="connection">
+    <v-sheet class="bg-deep-green pa-12" rounded>
+      <v-card class="mx-auto px-6 py-8" max-width="344">
+        <v-form
+          v-model="form"
+          @submit.prevent="onSubmit"
+        >
+          <v-text-field
+            v-model="email"
+            :readonly="loading"
+            :rules="[required]"
+            class="mb-2"
+            clearable
+            size="large"
+            label="Email"
+          ></v-text-field>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
+          <v-text-field
+            v-model="password"
+            :readonly="loading"
+            :rules="[required]"
+            clearable
+            size="large"
+            label="Password"
+            placeholder="Enter your password"
+          ></v-text-field>
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </template>
+          <br>
+
+          <v-btn
+            :disabled="!form"
+            :loading="loading"
+            block
+            color="success"
+            size="large"
+            type="submit"
+            variant="elevated"
+          >
+            Sign In
+          </v-btn>
+
+        </v-form>
+      </v-card>
+    </v-sheet>
+    <v-btn 
+      to="/inscription"
+      block
+      color="success"
+      size="large"
+      variant="elevated"
+      >
+        Register
+      </v-btn>
+  </div>
+</template>
   
-  <script>
-  import axios from 'axios'
-  
-    export default {
+<script>
+import axios from 'axios'
+
+  export default {
       data() {
         return {
-          users: [],
+          email : '',
+          password: ''
         };
       },
-      mounted() {
-        axios.get('http://localhost:3000/api/auth/login')
-          .then(response => {
-           // handle success
-            console.log(response.data)
-         })
-          .catch(error => {
-           // handle error
-            console.log(error)
-          })
-      }
-    };
+    methods: {
+      onSubmit () {
+        // send a POST request to the server with the form data
+        axios.post('http://localhost:3000/api/auth/login', {
+          email: this.email,
+          password: this.password
+        })
+        .then(response => {
+          localStorage.setItem('token', response.data.token);
+          // handle the response from the server
+          console.log(response.data);
+        })
+        .catch(error => {
+          // handle any errors that occur
+          console.error(error);
+        });
+      },
+      required(value) {
+        return !!value || 'Field is required';
+      },
+    }
+  };
   
-  </script>
-  
-  <style lang="scss" scoped>
-  
-  </style>
+</script>
+
+<style lang="scss" scoped>
+
+</style>
