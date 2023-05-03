@@ -27,18 +27,16 @@
       },
       methods: {
         submitForm() {
-          // send a POST request to the server with the form data
           axios.post('http://localhost:3000/api/auth/login', {
             email: this.email,
             password: this.password
           })
           .then(response => {
             localStorage.setItem('token', response.data.token);
-            // handle the response from the server
             console.log(response.data);
+            this.$router.push('/');
           })
           .catch(error => {
-            // handle any errors that occur
             console.error(error);
           });
         }

@@ -33,26 +33,30 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
     let conn;
     try{
-        conn = pool.getConnection();
-        const user = pool.query(
+        conn = await pool.getConnection();
+        const [row] = await pool.query(
             'SELECT * FROM users WHERE email = ?', [email]
         );
+        const user = row;
 
-        if (!user.length) {
-            return res.status(400).json({ message: "L'email ou le mot de passe est incorrect." });
+        if (!user) {
+            return res.status(404).json({ message: "L'email ou le mot de passe est incorrect." });
         }
 
-        const match = await bcrypt.compare(password, user[0].password);
+        const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
             return res.status(400).json({ message: "L'email ou le mot de passe est incorrect." });
         }
 
-        const token = jwt.sign({ id: user[0].id }, 'your_secret_key', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id }, 'your_secret_key', { expiresIn: '1h' });
 
         return res.json({ token });
     }
     catch(e){
         console.log(e);
+    }
+    finally {
+        if (conn) conn.release();
     }
 };
