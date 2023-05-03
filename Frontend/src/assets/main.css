@@ -1,8 +1,20 @@
 #app {
-  max-width: 1280px;
-  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+  color: hsla(0, 0%, 0%, 0.8);
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  font-weight: normal;
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-style: roboto neue lt std thin condensed sans-serif bold;
 }
 
 a,

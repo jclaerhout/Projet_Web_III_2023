@@ -1,29 +1,54 @@
 <template>
-  <div class="inscription">
-    <h1>Page d'inscription</h1>
-    <p>Formulaire d'inscription</p>
-    <form @submit.prevent="submitForm">
-      <label for="firstname">Prénom:</label>
-      <input type="text" id="firstname" v-model="firstname" required>
+  <v-sheet class="bg-deep-purple pa-12" rounded>
+    <v-card class="mx-auto px-6 py-8" max-width="344" title="User Registration">
+      <v-form
+        v-model="form"
+        @submit.prevent="onSubmit"
+      >
+        <v-text-field
+          v-model="email"
+          color="primary"
+          :readonly="loading"
+          :rules="[required]"
+          class="mb-2"
+          label="Email"
+          variant="underlined"
+        ></v-text-field>
 
-      <label for="lastname">Nom de famille:</label>
-      <input type="text" id="lastname" v-model="lastname" required>
+        <v-text-field
+          v-model="password"
+          type="password"
+          color="primary"
+          label="Password"
+          :readonly="loading"
+          :rules="[required]"
+          clearable
+          placeholder="Enter your password"
+          variant="underlined"
+        ></v-text-field>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required>
+        <v-divider></v-divider>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" required>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
-      <label for="location">Location:</label>
-      <input type="text" id="location" v-model="location" required>
+          <v-btn 
+          color="success"
+          :disabled="!form"
+          :loading="loading"
+          block
+          size="large"
+          type="submit"
+          variant="elevated"
+          >
+            Complete Registration
 
-      <label for="job">Job:</label>
-      <input type="text" id="job" v-model="job" required>
-
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+            <v-icon icon="mdi-chevron-right" end></v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -32,24 +57,26 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      location: '',
-      job: ''
+      form: false,
+      email: this.email,
+      password: this.password,
+      loading: false,
     };
   },
   methods: {
-    submitForm() {
+    onSubmit() {      
+      if (!this.form) return
+      this.loading = true
+      setTimeout(() => (this.loading = false), 2000)
+
       // send a POST request to the server with the form data
       axios.post('http://localhost:3000/api/auth/signup', {
-        name: this.lastname,
-        firstname: this.firstname,
+        name: undefined,
+        firstname: undefined,
         email: this.email,
         password: this.password,
-        location: this.location,
-        job: this.job
+        location: undefined,
+        job: undefined
       })
       .then(response => {
         // handle the response from the server
@@ -59,9 +86,13 @@ export default {
         // handle any errors that occur
         console.error(error);
       });
-    }
+    },
+
+    required(value) {
+      return !!value || 'Field is required';
+    },
   }
-  }
+};
 </script>
 
 <style lang="scss" scoped>
