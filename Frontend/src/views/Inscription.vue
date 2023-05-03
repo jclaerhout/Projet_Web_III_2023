@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="bg-deep-purple pa-12" rounded>
+  <v-sheet rounded class="pa-12" color="hsla(160, 100%, 37%, 1)">
     <v-card class="mx-auto px-6 py-8" max-width="344" title="User Registration">
       <v-form
         v-model="form"
