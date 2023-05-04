@@ -33,6 +33,7 @@ exports.getAllUsers = async(req, res) =>{
     const decoded = jwt.verify(token, 'your_secret_key');
     const userId = decoded.id;
     console.log(userId);
+    console.log(decoded.exp);
     try {
       conn = await pool.getConnection();
       const results = await pool.query(`SELECT * FROM users WHERE id = ?`, [userId]);
