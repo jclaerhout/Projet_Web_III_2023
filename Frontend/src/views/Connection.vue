@@ -1,5 +1,5 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-
   <div class="connection">
     <v-sheet class="bg-deep-green pa-12" rounded>
       <v-card class="mx-auto px-6 py-8" max-width="344">
@@ -44,7 +44,7 @@
         </v-form>
       </v-card>
     </v-sheet>
-    <v-btn 
+    <v-btn
       to="/inscription"
       block
       color="success"
@@ -55,7 +55,7 @@
       </v-btn>
   </div>
 </template>
-  
+
 <script>
 import axios from 'axios'
 
@@ -88,7 +88,7 @@ import axios from 'axios'
       },
     }
   };
-  
+
 </script>
 
 <style lang="scss" scoped>
