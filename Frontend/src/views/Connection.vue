@@ -34,7 +34,7 @@
           .then(response => {
             localStorage.setItem('token', response.data.token);
             console.log(response.data);
-            this.$router.push('/');
+            this.$router.push('/profil');
           })
           .catch(error => {
             console.error(error);
