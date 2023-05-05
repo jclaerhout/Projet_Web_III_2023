@@ -6,7 +6,8 @@
         <router-link to="/"><v-img src="/appareil-photo.png" height="64" width="64" max-height="64"></v-img></router-link>
         <v-spacer></v-spacer>
         <v-text-field placeholder="Recherche" hide-details></v-text-field>
-        <router-link to="/connection"><v-btn color="white" text>Connexion</v-btn></router-link>
+        <router-link to="/connection"><v-btn color="white" text>Se connecter</v-btn></router-link>
+        <v-btn @click="logout" color="white" text>Se deconnecter</v-btn>
       </v-app-bar>
     </v-app>
     <router-view />
@@ -16,5 +17,11 @@
 <script>
 export default {
   name: 'App',
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('/connection');
+    }
+  }
 };
 </script>
