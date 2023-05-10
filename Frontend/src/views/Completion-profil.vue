@@ -7,36 +7,48 @@
             Informations personnelles
           </v-card-title>
           <v-card-text>
-            <v-form>
+            <v-form
+            ref="form"
+            v-model="form"
+            lazy-validation
+            @submit.prevent="updateUser"
+            >
               <v-row>
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.firstname"
                     label="Prénom"
-                    :rules="[required]"
+                    :rules="[rules.required]"
+                    clearable
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.lastname"
                     label="Nom"
-                    :rules="[required]"
+                    :rules="[rules.required]"
+                    clearable
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="6">
                   <v-text-field
                     type="date"
                     v-model="user.birthdate"
                     label="Date de naissance"
-                    :rules="[required]"
+                    :rules="[rules.required]"
+                    clearable
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.sexe"
                     label="Sexe"
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="12">
                   <v-textarea
                     v-model="user.description"
@@ -45,18 +57,21 @@
                     :rows="2"
                   ></v-textarea>
                 </v-col>
+
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.location"
                     label="Localisation"
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.favoriteEquipment"
                     label="Matériel favori"
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="12">
                   <v-textarea
                     v-model="user.xpPro"
@@ -65,14 +80,20 @@
                     :rows="2"
                   ></v-textarea>
                 </v-col>
+
               </v-row>
+
+              <v-card-actions>
+                <v-btn
+                  type="submit"
+                  color="primary"
+                >
+                  Compléter le profil
+                </v-btn>
+              </v-card-actions>
+
             </v-form>
           </v-card-text>
-          <v-card-actions>
-            <v-btn to="/profil" color="primary" @click="updateUser">
-              Compléter le profil
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </div>
     </div>
@@ -88,7 +109,7 @@ export default {
         userId: null,
         firstname: '',
         lastname: '',
-        birthdate: '',
+        birthdate: null,
         sexe: '',
         description: '',
         location: '',
@@ -96,6 +117,9 @@ export default {
         xpPro: ''
       },
       loading: true,
+      rules: {
+        required: value => !!value || 'Field is required',
+      },
     };
   },
   mounted() {
@@ -110,7 +134,6 @@ export default {
         })
         .then((response) => {
           this.userId = response.data;
-          console.log(this.userId);
           this.loading = false;
         })
         .catch((error) => {
@@ -119,7 +142,7 @@ export default {
     },
 
     updateUser() {
-      axios.put('http://localhost:3000/api/auth/updateUser', {
+        axios.put('http://localhost:3000/api/auth/updateUser', {
           userId: this.userId,
           firstname: this.user.firstname,
           lastname: this.user.lastname,
@@ -132,14 +155,11 @@ export default {
         })
         .then(response => {
           console.log(response.data);
+          this.$router.push('/profil');
         })
         .catch(error => {
           console.log(error);
         });
-    },
-
-    required(value) {
-      return !!value || 'Field is required';
     },
   }
 };

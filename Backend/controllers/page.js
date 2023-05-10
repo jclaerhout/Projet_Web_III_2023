@@ -40,10 +40,15 @@ exports.getAllUsers = async(req, res) =>{
       console.log(results);
       if (results.length > 0) {
         const user = results[0];
+        if (user.birthdate === null) {
+          user.birthdate = '';
+        } else {
+          user.birthdate = user.birthdate.toISOString().split('T')[0];
+        }
         res.json({ id: user.id,
                    name: user.name,
                    firstname: user.firstname,
-                   birthdate: user.birthdate.toISOString().split('T')[0],
+                   birthdate: user.birthdate,
                    email: user.email,
                    sexe: user.sexe,
                    location: user.location,
