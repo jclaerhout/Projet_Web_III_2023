@@ -69,6 +69,7 @@ export default {
       .then(response => {
         // handle the response from the server
         console.log(response.data);
+        this.$router.push('/connection');
       })
       .catch(error => {
         // handle any errors that occur

@@ -60,3 +60,38 @@ exports.login = async (req, res, next) => {
         if (conn) conn.release();
     }
 };
+
+exports.getUserId = async (req, res) => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, 'your_secret_key');
+    const userId = decoded.id;
+    console.log(userId);
+    //console.log(decoded.exp);
+    res.json({ userId });
+  };
+
+exports.updateUser = async (req, res, next) => {
+    const { userId, lastname, firstname, location } = req.body;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const [row] = await pool.query(
+            'UPDATE users SET name = ?, firstname = ?, location = ? WHERE id = ?', 
+            [lastname, firstname, location, userId.userId]
+        );
+        const user = row;
+
+        if (!user) {
+            return res.status(404).json({ message: "L'utilisateur n'existe pas." });
+        }
+
+        return res.json({ message: "L'utilisateur a été mis à jour." });
+    }
+    catch(e){
+        console.log(e);
+    }
+    finally {
+        if (conn) conn.release();
+    }
+};

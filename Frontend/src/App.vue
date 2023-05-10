@@ -8,6 +8,7 @@
         <v-text-field placeholder="Recherche" hide-details></v-text-field>
         <router-link to="/connection"><v-btn color="white" text>Se connecter</v-btn></router-link>
         <v-btn @click="logout" color="white" text>Se deconnecter</v-btn>
+        <v-btn color="white" text to="/profil">Profil</v-btn>
       </v-app-bar>
     </v-app>
     <router-view />
