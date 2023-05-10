@@ -3,6 +3,7 @@ const app = express();
 
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
+const userSearch = require('./routes/search');
 const path = require('path');
 
 app.use((req, res, next) => {
@@ -16,5 +17,6 @@ app.use(express.json());
 
 app.use('/api/page',pageRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/search', userSearch);
 
 module.exports = app;
