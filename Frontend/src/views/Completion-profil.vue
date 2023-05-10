@@ -13,14 +13,14 @@
                   <v-text-field
                     v-model="user.firstname"
                     label="Prénom"
-                    required
+                    :rules="[required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.lastname"
                     label="Nom"
-                    required
+                    :rules="[required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6">
@@ -28,14 +28,13 @@
                     type="date"
                     v-model="user.birthdate"
                     label="Date de naissance"
-                    required
+                    :rules="[required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
-                    type="gender"
-                    v-model="user.gender"
-                    label="Genre"
+                    v-model="user.sexe"
+                    label="Sexe"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -55,12 +54,12 @@
                 <v-col cols="6">
                   <v-text-field
                     v-model="user.favoriteEquipment"
-                    label="Matériel utilisé/favori"
+                    label="Matériel favori"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-textarea
-                    v-model="user.workExperience"
+                    v-model="user.xpPro"
                     label="Expérience professionnelle"
                     auto-grow
                     :rows="2"
@@ -90,11 +89,11 @@ export default {
         firstname: '',
         lastname: '',
         birthdate: '',
-        gender: '',
+        sexe: '',
         description: '',
         location: '',
         favoriteEquipment: '',
-        workExperience: ''
+        xpPro: ''
       },
       loading: true,
     };
@@ -118,17 +117,18 @@ export default {
           console.error(error);
         });
     },
+
     updateUser() {
       axios.put('http://localhost:3000/api/auth/updateUser', {
           userId: this.userId,
           firstname: this.user.firstname,
           lastname: this.user.lastname,
           birthdate: this.user.birthdate,
-          gender: this.user.gender,
+          sexe: this.user.sexe,
           description: this.user.description,
           location: this.user.location,
           favoriteEquipment: this.user.favoriteEquipment,
-          workExperience: this.user.workExperience
+          xpPro: this.user.xpPro
         })
         .then(response => {
           console.log(response.data);
@@ -136,7 +136,11 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+
+    required(value) {
+      return !!value || 'Field is required';
+    },
   }
 };
 </script>

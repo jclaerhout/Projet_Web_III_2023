@@ -61,10 +61,13 @@ export default {
       axios.post('http://localhost:3000/api/auth/signup', {
         name: '',
         firstname: '',
+        birthdate: '0000-00-00',
         email: this.email,
         password: this.password,
+        sexe: '',
         location: '',
-        job: '',
+        favoriteEquipment: '',
+        xpPro: '',
       })
       .then(response => {
         // handle the response from the server

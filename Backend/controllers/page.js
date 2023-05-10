@@ -43,9 +43,12 @@ exports.getAllUsers = async(req, res) =>{
         res.json({ id: user.id,
                    name: user.name,
                    firstname: user.firstname,
+                   birthdate: user.birthdate.toISOString().split('T')[0],
                    email: user.email,
+                   sexe: user.sexe,
                    location: user.location,
-                   job: user.job
+                   favoriteEquipment: user.favoriteEquipment,
+                   xpPro: user.xpPro
                   });
       } else {
         res.status(404).send('User not found');
