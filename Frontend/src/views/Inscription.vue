@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <v-sheet rounded class="pa-12" color="hsla(160, 100%, 37%, 1)">
     <v-card class="mx-auto px-6 py-8" max-width="344" title="User Registration">
