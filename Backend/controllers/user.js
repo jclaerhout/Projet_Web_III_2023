@@ -61,6 +61,47 @@ exports.login = async (req, res, next) => {
     }
 };
 
+exports.recherche = async (req, res, next) => {
+    const query = req.query.search;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const names = await conn.query(
+            'SELECT id, name, firstname FROM users WHERE name LIKE ?',
+            [`${query}%`]
+        );
+        const firstNames = await conn.query(
+            'SELECT id, name, firstname FROM users WHERE firstname LIKE ? AND name NOT LIKE ?',
+            [`${query}%`, `${query}%`]);
+        res.json({ names: names, firstNames: firstNames });
+    }
+    catch(e) { console.log(e) }
+    finally {
+        if (conn) {
+        conn.release();
+        }
+    }
+};
+
+exports.fetchUser = async (req, res, next) => {
+    const query = req.query.userId;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const queryResult = await conn.query('SELECT id, name, firstname, email, location, job from users WHERE id LIKE ?', [`${query}`])
+        const user = queryResult[0];
+        console.log(user);
+        res.json(user);
+      }
+      catch(e){
+        console.log(e);
+      } finally {
+        if (conn) {
+          conn.release();
+        }
+      }
+}
+
 exports.getUserId = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
