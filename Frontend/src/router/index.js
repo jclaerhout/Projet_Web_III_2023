@@ -13,7 +13,7 @@ const routes = [
   {path: '/inscription', name:'Inscription', component: Inscription},
   {path: '/connection', name:'Connection', component: Connection},
   {path: '/profil', name:'Profil', component: Profil},
-  {path: '/utilisateur/:userId', name:'Utilisateur', component: Utilisateur}
+  {path: '/utilisateur/:userId', name:'Utilisateur', component: Utilisateur},
   {path: '/completion-profil', name:'Completion-profil', component: Completion_profil}
 ]
 

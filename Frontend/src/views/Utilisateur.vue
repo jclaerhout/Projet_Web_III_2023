@@ -28,14 +28,14 @@ import axios from 'axios';
     },
     //Call the function fetchUser when the parameter in the this.$router.push from the searchbar change
     watch: {
-        '$route.params.userId'(newValue, oldValue) {
+        '$route.params.userId'() {
             this.fetchUser();
         },
     },
     methods: {
         async fetchUser() {
             const userId = this.$route.params.userId;
-            const response = await axios.get(`http://localhost:3000/api/user`, {
+            await axios.get(`http://localhost:3000/api/user`, {
                 params: {
                     userId: userId,
                 },
