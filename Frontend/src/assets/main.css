@@ -41,3 +41,8 @@ a,
     padding: 0 2rem;
   }
 }
+
+#addPhoto {
+  display: flex;
+  place-items: normal;
+}

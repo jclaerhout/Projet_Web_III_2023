@@ -3,8 +3,8 @@ const mariadb = require('mariadb');
 const pool = mariadb.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'dev3',
-    database: 'dev3',
+    password: 'ephec',
+    database: 'Dev_III',
   });
 
   module.exports = pool;
