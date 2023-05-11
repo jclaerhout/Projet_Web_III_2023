@@ -66,19 +66,19 @@ exports.getUserId = async (req, res) => {
     const token = authHeader && authHeader.split(" ")[1];
     const decoded = jwt.verify(token, 'your_secret_key');
     const userId = decoded.id;
-    //console.log(userId);
+    console.log(userId);
     //console.log(decoded.exp);
     res.json({ userId });
 };
 
 exports.addPhoto = async (req, res, next) => {
-    const { user, link, description} = req.body
+    const { userId, link, description} = req.body
     let conn;
     try{
         conn = await pool.getConnection();
         const [row] = await pool.query(
-            'INSERT INTO pictures (user, link, description) VALUES (?, ?, ?)',
-            [user, link, description]
+            'INSERT INTO pictures (id_user, link, description) VALUES (?, ?, ?)',
+            [userId, link, description]
         );
         const user = row;
 

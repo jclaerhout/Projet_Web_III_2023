@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbcf965a-d8b8-4c7b-8a51-16a8fc8e178d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Projet_Web_III_2023.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projet_Web_III_2023.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/controllers/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/page.js" afterDir="false" />
@@ -23,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/Frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/views/Accueil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/views/Accueil.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/views/Ajout-photo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/views/Ajout-photo.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/views/Connection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/views/Connection.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/views/Inscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/views/Inscription.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/views/Profil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/views/Profil.vue" afterDir="false" />
@@ -83,7 +89,7 @@
       <option name="presentableId" value="Default" />
       <updated>1683717187241</updated>
       <workItem from="1683717189811" duration="22735000" />
-      <workItem from="1683787166160" duration="2173000" />
+      <workItem from="1683787166160" duration="3652000" />
     </task>
     <servers />
   </component>

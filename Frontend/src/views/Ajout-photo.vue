@@ -15,7 +15,9 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      user: null,
+      userId: null,
+      link: '',
+      description: '',
       loading: true,
     };
   },
@@ -32,6 +34,7 @@ export default {
           .then((response) => {
             this.userId = response.data;
             this.loading = false;
+            console.log(this.userId)
           })
           .catch((error) => {
             console.error(error);
@@ -39,7 +42,7 @@ export default {
     },
     addPhoto() {
       axios.put('http://localhost:3000/api/auth/addPhoto', {
-        user: this.user,
+        userId: this.userId.userId,
         link: this.link,
         description: this.description
       })
