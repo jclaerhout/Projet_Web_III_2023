@@ -71,7 +71,7 @@ import axios from 'axios'
       
       methods: {
         submitForm() {
-          axios.post('http://localhost:3000/api/auth/login', {
+          axios.post('http://localhost:3000/api/user/login', {
             email: this.email,
             password: this.password
           })

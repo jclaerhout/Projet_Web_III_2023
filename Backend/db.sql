@@ -24,18 +24,22 @@ CREATE TABLE IF NOT EXISTS Users (
 	id INT NOT NULL auto_increment,
 	name VARCHAR(50) NOT NULL,
 	firstname VARCHAR(50) NOT NULL,
+	birthdate DATE NOT NULL,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
+	sexe VARCHAR(50) NOT NULL,
 	location VARCHAR(50) NOT NULL,
-	job VARCHAR(255) NOT NULL,
+	favoriteEquipment VARCHAR(255) NOT NULL,
+	xpPro VARCHAR(255) NOT NULL,
 	
 	PRIMARY KEY (id)
 );
 
-INSERT INTO Users (name, firstname, email, password, location, job) VALUES ("Doe", "John", "johndoe@gmail.com", "123456", "Paris", "Etudiant"),
-																		   ("Doe", "Jane", "janedoe@gmail.com", "123456", "Paris", "Etudiant"),
-																		   ("Doe", "Jack", "jackdoe@gmail.com", "123456", "Paris", "Etudiant"),
-																		   ("Doe", "Jill", "jilldoe@gmail.com", "123456", "Paris", "Etudiant");
+INSERT INTO Users (name, firstname, birthdate, email, password, sexe, location, favoriteEquipment, xpPro) 
+				  VALUES ("Doe", "John", "1968-01-01", "johndoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
+						 ("Doe", "Jane", "1968-01-01", "janedoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
+						 ("Doe", "Jack", "1968-01-01", "jackdoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
+						 ("Doe", "Jill", "1968-01-01", "jilldoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant");
 
 CREATE TABLE IF NOT EXISTS Roles (
 	id INT NOT NULL auto_increment,

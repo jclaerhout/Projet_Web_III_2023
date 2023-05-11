@@ -59,17 +59,21 @@ export default {
   methods: {
     onSubmit() {
       // send a POST request to the server with the form data
-      axios.post('http://localhost:3000/api/auth/signup', {
+      axios.post('http://localhost:3000/api/user/signup', {
         name: '',
         firstname: '',
+        birthdate: '0000-00-00',
         email: this.email,
         password: this.password,
+        sexe: '',
         location: '',
-        job: '',
+        favoriteEquipment: '',
+        xpPro: '',
       })
       .then(response => {
         // handle the response from the server
         console.log(response.data);
+        this.$router.push('/connection');
       })
       .catch(error => {
         // handle any errors that occur
