@@ -18,6 +18,7 @@
             <v-btn color="white" text>Se connecter</v-btn>
           </router-link>
           <v-btn @click="logout" color="white" text>Se deconnecter</v-btn>
+          <v-btn color="white" text to="/profil">Profil</v-btn>
         </v-app-bar>
       </v-app>
       
@@ -138,7 +139,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .flex-container {
   display: flex;
   position: relative;
@@ -189,4 +190,13 @@ ul li {
   font-size: 1rem;
   color: hsla(0, 0%, 0%, 0.8);
 }
+
+.nav {
+  padding: 0.5rem 0 0.5rem;
+
+  #logo {
+  margin: 0 2rem;
+}
+}
 </style>
+

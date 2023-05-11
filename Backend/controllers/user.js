@@ -6,13 +6,13 @@ const pool = require('../pool');
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            const { name, firstname, email, location, job } = req.body;
+            const { name, firstname, birthdate, email, sexe, location, favoriteEquipment, xpPro } = req.body;
             let conn;
             try{
                 conn = pool.getConnection();
                 const rows = pool.query(
-                    'INSERT INTO users (name, firstname, email, password, location, job) VALUES (?, ?, ?, ?, ?, ?)', 
-                    [name, firstname, email, hash, location, job],
+                    'INSERT INTO users (name, firstname, birthdate, email, password, sexe, location, favoriteEquipment, xpPro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                    [name, firstname, birthdate, email, hash, sexe, location, favoriteEquipment, xpPro],
                     (error, results) => {
                     if (error) {
                         console.error(error);
@@ -101,3 +101,38 @@ exports.fetchUser = async (req, res, next) => {
         }
       }
 }
+
+exports.getUserId = async (req, res) => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, 'your_secret_key');
+    const userId = decoded.id;
+    //console.log(userId);
+    //console.log(decoded.exp);
+    res.json({ userId });
+  };
+
+exports.updateUser = async (req, res, next) => {
+    const { userId, lastname, firstname, birthdate, sexe, location, favoriteEquipment, xpPro } = req.body;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const [row] = await pool.query(
+            'UPDATE users SET name = ?, firstname = ?, birthdate = ?, sexe = ?, location = ?, favoriteEquipment = ?, xpPro = ? WHERE id = ?', 
+            [lastname, firstname, birthdate, sexe, location, favoriteEquipment, xpPro, userId.userId]
+        );
+        const user = row;
+
+        if (!user) {
+            return res.status(404).json({ message: "L'utilisateur n'existe pas." });
+        }
+
+        return res.json({ message: "L'utilisateur a été mis à jour." });
+    }
+    catch(e){
+        console.log(e);
+    }
+    finally {
+        if (conn) conn.release();
+    }
+};

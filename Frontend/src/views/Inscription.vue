@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <v-sheet rounded class="pa-12" color="hsla(160, 100%, 37%, 1)">
     <v-card class="mx-auto px-6 py-8" max-width="344" title="User Registration">
@@ -61,14 +62,18 @@ export default {
       axios.post('http://localhost:3000/api/user/signup', {
         name: '',
         firstname: '',
+        birthdate: '0000-00-00',
         email: this.email,
         password: this.password,
+        sexe: '',
         location: '',
-        job: '',
+        favoriteEquipment: '',
+        xpPro: '',
       })
       .then(response => {
         // handle the response from the server
         console.log(response.data);
+        this.$router.push('/connection');
       })
       .catch(error => {
         // handle any errors that occur
