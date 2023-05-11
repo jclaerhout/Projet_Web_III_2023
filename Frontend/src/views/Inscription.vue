@@ -58,7 +58,7 @@ export default {
   methods: {
     onSubmit() {
       // send a POST request to the server with the form data
-      axios.post('http://localhost:3000/api/auth/signup', {
+      axios.post('http://localhost:3000/api/user/signup', {
         name: '',
         firstname: '',
         email: this.email,

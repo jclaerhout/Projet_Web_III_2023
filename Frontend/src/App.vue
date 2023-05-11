@@ -3,7 +3,6 @@
     <div class="flex-container">
       <v-app id="navbar">
         <v-app-bar color="hsla(160, 100%, 37%, 1)" dark>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
           <router-link to="/">
             <v-img src="/appareil-photo.png" height="64" width="64" max-height="64"></v-img>
           </router-link>
@@ -86,7 +85,7 @@ export default {
           }
 
             //Get request for the backend with the letters used in the searchbar as parameters
-            const response = await axios.get(`http://localhost:3000/api/auth/search`, {
+            const response = await axios.get(`http://localhost:3000/api/user/search`, {
                 params: {
                     search: this.searchQuery,
                 },
