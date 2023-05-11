@@ -9,14 +9,6 @@
   align-items: center;
 }
 
-#navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  font-style: roboto neue lt std thin condensed sans-serif bold;
-}
-
 a,
 .green {
   text-decoration: none;

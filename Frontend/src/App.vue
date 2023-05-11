@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <v-app>
-      <v-app-bar color="hsla(160, 100%, 37%, 1)" dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        <router-link to="/"><v-img src="/appareil-photo.png" height="64" width="64" max-height="64"></v-img></router-link>
+      <v-app-bar color="hsla(160, 100%, 37%, 1)" dark class="nav">
+        <router-link to="/">
+          <v-img src="/appareil-photo.png" height="64" width="64" max-height="64" id="logo"></v-img>
+        </router-link>
         <v-spacer></v-spacer>
         <v-text-field placeholder="Recherche" hide-details></v-text-field>
         <router-link to="/connection"><v-btn color="white" text>Se connecter</v-btn></router-link>
@@ -26,3 +27,14 @@ export default {
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.nav {
+  padding: 0.5rem 0 0.5rem;
+
+  #logo {
+  margin: 0 2rem;
+}
+}
+</style>

@@ -129,7 +129,7 @@ export default {
     getUser() {
       const token = localStorage.getItem('token');
       axios
-        .get('http://localhost:3000/api/auth/getUserId', {
+        .get('http://localhost:3000/api/user/getUserId', {
           headers: { authorization: `Bearer ${token}` },
         })
         .then((response) => {
@@ -142,7 +142,7 @@ export default {
     },
 
     updateUser() {
-        axios.put('http://localhost:3000/api/auth/updateUser', {
+        axios.put('http://localhost:3000/api/user/updateUser', {
           userId: this.userId,
           firstname: this.user.firstname,
           lastname: this.user.lastname,
