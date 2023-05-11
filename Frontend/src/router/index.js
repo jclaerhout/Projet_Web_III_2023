@@ -4,12 +4,14 @@ import Accueil from '@/views/Accueil.vue'
 import Inscription from '@/views/Inscription.vue'
 import Connection from '@/views/Connection.vue'
 import Profil from '@/views/Profil.vue'
+import Utilisateur from '@/views/Utilisateur.vue'
 
 const routes = [
   {path: '/', name:'Accueil', component: Accueil},
   {path: '/inscription', name:'Inscription', component: Inscription},
   {path: '/connection', name:'Connection', component: Connection},
-  {path: '/profil', name:'Profil', component: Profil}
+  {path: '/profil', name:'Profil', component: Profil},
+  {path: '/utilisateur/:userId', name:'Utilisateur', component: Utilisateur}
 ]
 
 const router = createRouter({

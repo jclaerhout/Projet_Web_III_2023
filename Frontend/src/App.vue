@@ -12,7 +12,7 @@
             v-model="searchQuery"
             placeholder="Recherche" 
             @input="handleSearch" 
-            @focus="showOverlay = true" 
+            @focus="handleSearchFocus" 
             @blur="hideOverlay"
           ></v-text-field>
           <router-link to="/connection">
@@ -80,13 +80,13 @@ export default {
       
         try {
           if (this.searchQuery === '') {
-      this.nameResults = [];
-      this.firstnameResults = [];
-      return; // Exit the method if searchQuery is empty
-    }
+            this.nameResults = [];
+            this.firstnameResults = [];
+            return;
+          }
 
             //Get request for the backend with the letters used in the searchbar as parameters
-            const response = await axios.get(`http://localhost:3000/api/search`, {
+            const response = await axios.get(`http://localhost:3000/api/auth/search`, {
                 params: {
                     search: this.searchQuery,
                 },
@@ -113,6 +113,11 @@ export default {
             }, 800);
           }
         },
+        //Handle the case if someone write something in the searchbar and then loose focus. When returned the search will be made again
+        handleSearchFocus() {
+            this.showOverlay = true;
+            this.handleSearch();
+        },
         //Handle when the user loose the focus of the searchbar, the result box is hidden
         hideOverlay() {
             setTimeout(() => {
@@ -122,8 +127,9 @@ export default {
         },
         //Handle when the user click on a user from his search
         handleResultClick(result) {
-            console.log('Cliqué : ', result);
-            this.$router.push('/profil');
+            console.log('Cliqué : ', result.id);
+            this.searchQuery = '';
+            this.$router.push(`/utilisateur/${result.id}`);
         },
     logout() {
       localStorage.removeItem('token');
@@ -140,8 +146,8 @@ export default {
 }
 
 .content {
-  position: relative; /* Add this line */
-  z-index: 2; /* Add this line */
+  position: relative; 
+  z-index: 2; 
   display: flex;
   justify-content: center;
   align-items: center;
