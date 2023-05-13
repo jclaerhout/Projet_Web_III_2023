@@ -17,7 +17,7 @@
           <router-link to="/connection">
             <v-btn color="white" text>Se connecter</v-btn>
           </router-link>
-          <v-btn @click="logout" color="white" text>Se deconnecter</v-btn>
+          <v-btn color="white" text @click="logout">Se deconnecter</v-btn>
           <v-btn color="white" text to="/profil">Profil</v-btn>
         </v-app-bar>
       </v-app>

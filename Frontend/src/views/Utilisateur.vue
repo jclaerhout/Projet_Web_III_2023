@@ -22,15 +22,15 @@ import axios from 'axios';
             user: null,
         };
     },
-    //Call the function fetchUser when the page is created
-    created() {
-        this.fetchUser();
-    },
     //Call the function fetchUser when the parameter in the this.$router.push from the searchbar change
     watch: {
         '$route.params.userId'() {
             this.fetchUser();
         },
+    },
+    //Call the function fetchUser when the page is created
+    created() {
+        this.fetchUser();
     },
     methods: {
         async fetchUser() {

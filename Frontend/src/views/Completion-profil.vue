@@ -34,8 +34,8 @@
 
                 <v-col cols="6">
                   <v-text-field
-                    type="date"
                     v-model="user.birthdate"
+                    type="date"
                     label="Date de naissance"
                     :rules="[rules.required]"
                     clearable

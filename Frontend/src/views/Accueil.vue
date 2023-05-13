@@ -28,7 +28,7 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-card class="mt-4" v-for="(photo, index) in photos" :key="index">
+            <v-card v-for="(photo, index) in photos" :key="index" class="mt-4">
               <v-img :src="photo.urls.regular" height="300px" />
               <v-card-title>{{ photo.alt_description }}</v-card-title>
               <v-card-actions>
