@@ -32,12 +32,18 @@
               <b>NOM & PRENOM</b><hr /><br />
               <ul>
                 <li v-for="result in nameResults" :key="result.id" >
-                  <button @click="handleResultClick(result)"><b>{{ result.name }}</b>  {{ result.firstname }} </button>
+                  <button @click="handleResultClick(result)"><b>{{ result.name }}</b>  {{ result.firstname }} {{ result.email }}</button>
                 </li>
               </ul>
               <ul>
                 <li v-for="result in firstnameResults" :key="result.id" >
-                  <button @click="handleResultClick(result)">{{ result.name }}  <b>{{ result.firstname }}</b> </button>
+                  <button @click="handleResultClick(result)">{{ result.name }}  <b>{{ result.firstname }}</b> {{ result.email }} </button>
+                </li>
+              </ul>
+              <b>EMAIL</b>
+              <ul>
+                <li v-for="result in emailResults" :key="result.id" >
+                  <button @click="handleResultClick(result)"><b>{{ result.email }}</b> {{ result.name }}  {{ result.firstname }} </button>
                 </li>
               </ul>
             </v-card-text>
@@ -59,6 +65,7 @@ export default {
       searchQuery: '',
       nameResults: [],
       firstnameResults: [],
+      emailResults: [],
       searchDebounced: null,
       showResults: false,
       showOverlay: false,
@@ -82,6 +89,7 @@ export default {
           if (this.searchQuery === '') {
             this.nameResults = [];
             this.firstnameResults = [];
+            this.emailResults = [];
             return;
           }
 
@@ -93,9 +101,11 @@ export default {
             });
             this.nameResults = response.data.names;
             this.firstnameResults = response.data.firstNames;
+            this.emailResults = response.data.emails;
         } catch (error) {
             this.nameResults = [];
             this.firstnameResults = [];
+            this.emailResults = [];
             console.log(error);
         }
         },
@@ -104,6 +114,7 @@ export default {
           if (this.searchQuery === '') {
             this.nameResults = [];
             this.firstnameResults = [];
+            this.emailResults = [];
             this.showResults = false;
           } else {
             this.searchDebounced(this.searchQuery);

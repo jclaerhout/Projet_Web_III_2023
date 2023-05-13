@@ -66,14 +66,20 @@ exports.recherche = async (req, res, next) => {
     let conn;
     try{
         conn = await pool.getConnection();
-        const names = await conn.query(
-            'SELECT id, name, firstname FROM users WHERE name LIKE ?',
-            [`${query}%`]
-        );
-        const firstNames = await conn.query(
-            'SELECT id, name, firstname FROM users WHERE firstname LIKE ? AND name NOT LIKE ?',
-            [`${query}%`, `${query}%`]);
-        res.json({ names: names, firstNames: firstNames });
+        const result = await conn.query(
+            `SELECT id, name, firstname, email,
+                CASE 
+                    WHEN (name LIKE ?) THEN 'names'
+                    WHEN (firstname LIKE ? AND name NOT LIKE ?) THEN 'firstNames'
+                    WHEN (email LIKE ?) THEN 'emails'
+                END AS category
+            FROM users
+            WHERE (name LIKE ?) OR (firstname LIKE ? AND name NOT LIKE ?) OR (email LIKE ? AND name NOT LIKE ? AND firstname NOT LIKE ?);
+        `, [`${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`]);
+        const names = result.filter(row => row.category === 'names');
+        const firstNames = result.filter(row => row.category === 'firstNames');
+        const emails = result.filter(row => row.category === 'emails');
+        res.json({ names: names, firstNames: firstNames, emails: emails });
     }
     catch(e) { console.log(e) }
     finally {
