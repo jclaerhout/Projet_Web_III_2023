@@ -40,12 +40,14 @@
                   <button @click="handleResultClick(result)">{{ result.name }}  <b>{{ result.firstname }}</b> {{ result.email }} </button>
                 </li>
               </ul>
-              <b>EMAIL</b>
+              <p v-if="firstnameResults.length == 0 & nameResults.length == 0">Aucun résultat</p>
+              <br /><b>EMAIL</b><hr /><br />
               <ul>
                 <li v-for="result in emailResults" :key="result.id" >
                   <button @click="handleResultClick(result)"><b>{{ result.email }}</b> {{ result.name }}  {{ result.firstname }} </button>
                 </li>
               </ul>
+              <p v-if="emailResults.length == 0">Aucun résultat</p>
             </v-card-text>
           </v-card>
         </div>
