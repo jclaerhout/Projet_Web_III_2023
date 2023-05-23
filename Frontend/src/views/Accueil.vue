@@ -63,7 +63,7 @@ import axios from 'axios'
           console.log(error)
         })
 
-      this.getPhotosFromUnsplash()
+      //this.getPhotosFromUnsplash()
     },
 
     methods: {
@@ -74,19 +74,19 @@ import axios from 'axios'
           behavior: 'smooth'
         })
       },
-
+      /*
       // Récupère des photos aléatoires depuis l'api unpslash
       async getPhotosFromUnsplash() {
         const response = await axios.get('https://api.unsplash.com/photos/random', {
         headers: {
-          Authorization: 'U3bJEMBp-PUbFXL5vp3J_65VQFn0Aqi3TZqzy7jzWkk',
+          Authorization: 'Bearer U3bJEMBp-PUbFXL5vp3J_65VQFn0Aqi3TZqzy7jzWkk',
         },
         params: {
           query: 'professional photography',
         },
       });
       this.photos = response.data
-      },
+      },*/
     }
   }
 

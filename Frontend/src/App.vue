@@ -27,27 +27,31 @@
         </div>
 
         <div class="overlay" :class="{ visible: showOverlay && showResults }">
-          <v-card v-if="showResults" class="search-results">
+          <v-card v-if="showResults" class="show-results">
             <v-card-text>
               <b>NOM & PRENOM</b><hr /><br />
-              <ul>
-                <li v-for="result in nameResults" :key="result.id" >
-                  <button @click="handleResultClick(result)"><b>{{ result.name }}</b>  {{ result.firstname }} {{ result.email }}</button>
-                </li>
-              </ul>
-              <ul>
-                <li v-for="result in firstnameResults" :key="result.id" >
-                  <button @click="handleResultClick(result)">{{ result.name }}  <b>{{ result.firstname }}</b> {{ result.email }} </button>
-                </li>
-              </ul>
-              <p v-if="firstnameResults.length == 0 & nameResults.length == 0">Aucun résultat</p>
+              <div v-if="nameResults.length > 0 || firstnameResults.length > 0" class="name-search-results">
+                <ul v-for="result in nameResults" :key="result.id" >
+                  <li>
+                    <button class="result-button" @click="handleResultClick(result)"><b>{{ result.name }}</b>  {{ result.firstname }} {{ result.email }}</button>
+                  </li>
+                </ul>
+                <ul v-for="result in firstnameResults" :key="result.id" >
+                  <li>
+                    <button class="result-button" @click="handleResultClick(result)">{{ result.name }}  <b>{{ result.firstname }}</b> {{ result.email }} </button>
+                  </li>
+                </ul>
+              </div>
+              <p v-else-if="firstnameResults.length == 0 & nameResults.length == 0" class="name-search-results">Aucun résultat</p>
               <br /><b>EMAIL</b><hr /><br />
-              <ul>
-                <li v-for="result in emailResults" :key="result.id" >
-                  <button @click="handleResultClick(result)"><b>{{ result.email }}</b> {{ result.name }}  {{ result.firstname }} </button>
-                </li>
-              </ul>
-              <p v-if="emailResults.length == 0">Aucun résultat</p>
+              <div v-if="emailResults.length > 0" class="email-search-results">
+                <ul v-for="result in emailResults" :key="result.id" >
+                  <li>
+                    <button class="result-button" @click="handleResultClick(result)"><b>{{ result.email }}</b> {{ result.name }}  {{ result.firstname }} </button>
+                  </li>
+                </ul>
+              </div>
+              <p v-else-if="emailResults.length == 0" class="email-search-results">Aucun résultat</p>
             </v-card-text>
           </v-card>
         </div>
@@ -85,65 +89,50 @@ export default {
     this.searchDebounced = _.debounce(this.search, 500);
   },
   methods: {
+    //Handle the search
+    handleSearch() {
+      if (this.searchQuery === '') {
+        this.nameResults = [];
+        this.firstnameResults = [];
+        this.emailResults = [];
+        this.showResults = false;
+      } else {
+        this.searchDebounced(this.searchQuery);
+        //Timeout because if someone make an error and erase his search and make a new one, the page has to take the time to make a new request
+         setTimeout(() => {
+          this.showResults = true;
+        }, 800);
+      }
+    },
     async search() {
-
-        try {
-          if (this.searchQuery === '') {
-            this.nameResults = [];
-            this.firstnameResults = [];
-            this.emailResults = [];
-            return;
-          }
-
-            //Get request for the backend with the letters used in the searchbar as parameters
-            const response = await axios.get(`http://localhost:3000/api/user/search`, {
-                params: {
-                    search: this.searchQuery,
-                },
-            });
-            this.nameResults = response.data.names;
-            this.firstnameResults = response.data.firstNames;
-            this.emailResults = response.data.emails;
-        } catch (error) {
-            this.nameResults = [];
-            this.firstnameResults = [];
-            this.emailResults = [];
-            console.log(error);
-        }
+      //Get request for the backend with the letters used in the searchbar as parameters
+      const response = await axios.get(`http://localhost:3000/api/user/search`, {
+        params: {
+          search: this.searchQuery,
         },
-        //Handle the search
-        handleSearch() {
-          if (this.searchQuery === '') {
-            this.nameResults = [];
-            this.firstnameResults = [];
-            this.emailResults = [];
-            this.showResults = false;
-          } else {
-            this.searchDebounced(this.searchQuery);
-            //Timeout because if someone make an error and erase his search and make a new one, the page has to take the time to make a new request
-            setTimeout(() => {
-              this.showResults = true;
-            }, 800);
-          }
-        },
-        //Handle the case if someone write something in the searchbar and then loose focus. When returned the search will be made again
-        handleSearchFocus() {
-            this.showOverlay = true;
-            this.handleSearch();
-        },
-        //Handle when the user loose the focus of the searchbar, the result box is hidden
-        hideOverlay() {
-            setTimeout(() => {
-                this.showResults = false;
-                this.showOverlay = false;
-            }, 200);
-        },
-        //Handle when the user click on a user from his search
-        handleResultClick(result) {
-            console.log('Cliqué : ', result.id);
-            this.searchQuery = '';
-            this.$router.push(`/utilisateur/${result.id}`);
-        },
+      });
+      this.nameResults = response.data.names;
+      this.firstnameResults = response.data.firstNames;
+      this.emailResults = response.data.emails;
+    },
+    //Handle the case if someone write something in the searchbar and then loose focus. When returned the search will be made again
+    handleSearchFocus() {
+        this.showOverlay = true;
+        this.handleSearch();
+    },
+    //Handle when the user loose the focus of the searchbar, the result box is hidden
+    hideOverlay() {
+      setTimeout(() => {
+        this.showResults = false;
+        this.showOverlay = false;
+      }, 200);
+    },
+    //Handle when the user click on a user from his search
+    handleResultClick(result) {
+      console.log('Cliqué : ', result.id);
+      this.searchQuery = '';
+      this.$router.push(`/utilisateur/${result.id}`);
+    },
     logout() {
       localStorage.removeItem('token');
       this.$router.push('/connection');
@@ -212,4 +201,3 @@ ul li {
 }
 }
 </style>
-
