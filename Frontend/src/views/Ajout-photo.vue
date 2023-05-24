@@ -3,8 +3,8 @@
     <h1>Ajout de photo</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <input id="input" type="file" ref="fileInput" @change="addPhoto">
-      <button @click="selectPhoto">Ajouter une Image</button>
+      <input id="input" type="file" ref="fileInput" @change="selectPhoto">
+      <button @click="addPhoto">Ajouter une Image</button>
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
       link: '',
       description: '',
       loading: true,
+      photo: null,
     };
   },
   mounted() {
@@ -41,9 +42,11 @@ export default {
           });
     },
     addPhoto() {
+      this.img = document.getElementById("input").files[0].name
+      console.log(this.img);
       axios.put('http://localhost:3000/api/auth/addPhoto', {
         userId: this.userId.userId,
-        link: this.link,
+        link: this.img,
         description: this.description
       })
           .then(response => {
@@ -55,8 +58,9 @@ export default {
           });
     },
     selectPhoto(){
-
+      this.photo = this.$refs.fileInput.files[0];
+      console.log(this.photo);
+      }
     }
-  }
 };
 </script>
