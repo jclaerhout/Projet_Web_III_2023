@@ -2,9 +2,9 @@
   <div id="app">
     <div class="flex-container">
       <v-app id="navbar">
-        <v-app-bar color="hsla(160, 100%, 37%, 1)" dark>
+        <v-app-bar class="nav" color="hsla(160, 100%, 37%, 1)" dark>
           <router-link to="/">
-            <v-img src="/appareil-photo.png" height="64" width="64" max-height="64"></v-img>
+            <v-img id="logo" src="img/appareil-photo.png" height="64" width="64" max-height="64"></v-img>
           </router-link>
           <v-spacer></v-spacer>
           <v-text-field
@@ -197,7 +197,7 @@ ul li {
   padding: 0.5rem 0 0.5rem;
 
   #logo {
-  margin: 0 2rem;
+  margin: 0 1rem;
 }
 }
 </style>
