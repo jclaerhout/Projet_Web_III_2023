@@ -34,7 +34,7 @@
             :disabled="!form"
             :loading="loading"
             block
-            color="success"
+            color="hsla(160, 100%, 37%, 1)"
             size="large"
             type="submit"
             variant="elevated"
@@ -48,7 +48,7 @@
     <v-btn
       to="/inscription"
       block
-      color="success"
+      color="hsla(160, 100%, 37%, 1)"
       size="large"
       variant="elevated"
       >
