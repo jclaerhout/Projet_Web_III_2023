@@ -61,6 +61,53 @@ exports.login = async (req, res, next) => {
     }
 };
 
+exports.recherche = async (req, res, next) => {
+    const query = req.query.search;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const result = await conn.query(
+            `SELECT id, name, firstname, email,
+                CASE 
+                    WHEN (name LIKE ?) THEN 'names'
+                    WHEN (firstname LIKE ? AND name NOT LIKE ?) THEN 'firstNames'
+                    WHEN (email LIKE ?) THEN 'emails'
+                END AS category
+            FROM users
+            WHERE (name LIKE ?) OR (firstname LIKE ? AND name NOT LIKE ?) OR (email LIKE ? AND name NOT LIKE ? AND firstname NOT LIKE ?);
+        `, [`${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`]);
+        const names = result.filter(row => row.category === 'names');
+        const firstNames = result.filter(row => row.category === 'firstNames');
+        const emails = result.filter(row => row.category === 'emails');
+        res.json({ names: names, firstNames: firstNames, emails: emails });
+    }
+    catch(e) { console.log(e) }
+    finally {
+        if (conn) {
+        conn.release();
+        }
+    }
+};
+
+exports.fetchUser = async (req, res, next) => {
+    const query = req.query.userId;
+    let conn;
+    try{
+        conn = await pool.getConnection();
+        const queryResult = await conn.query('SELECT id, name, firstname, email, location, job from users WHERE id LIKE ?', [`${query}`])
+        const user = queryResult[0];
+        console.log(user);
+        res.json(user);
+      }
+      catch(e){
+        console.log(e);
+      } finally {
+        if (conn) {
+          conn.release();
+        }
+      }
+}
+
 exports.getUserId = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
