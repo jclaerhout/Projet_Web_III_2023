@@ -94,7 +94,7 @@ exports.fetchUser = async (req, res, next) => {
     let conn;
     try{
         conn = await pool.getConnection();
-        const queryResult = await conn.query('SELECT id, name, firstname, email, location, job from users WHERE id LIKE ?', [`${query}`])
+        const queryResult = await conn.query('SELECT u.id, u.name, u.firstname, u.email, u.location, p.link, p.description from users u join pictures p on u.id = p.id_user WHERE u.id LIKE ? order by link desc', [`${query}`])
         const user = queryResult[0];
         console.log(user);
         res.json(user);
