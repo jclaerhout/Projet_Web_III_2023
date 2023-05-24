@@ -19,7 +19,6 @@
                     v-model="user.firstname"
                     label="Prénom"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
@@ -28,7 +27,6 @@
                     v-model="user.lastname"
                     label="Nom"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
@@ -38,15 +36,15 @@
                     type="date"
                     label="Date de naissance"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
                 <v-col cols="6">
-                  <v-text-field
+                  <v-select
                     v-model="user.sexe"
                     label="Sexe"
-                  ></v-text-field>
+                    :items="['Homme', 'Femme', 'Autre']"
+                  ></v-select>
                 </v-col>
 
                 <v-col cols="12">
@@ -59,10 +57,16 @@
                 </v-col>
 
                 <v-col cols="6">
-                  <v-text-field
+                  <vue-google-autocomplete
+                    id="location"
+                    ref="location"
                     v-model="user.location"
                     label="Localisation"
-                  ></v-text-field>
+                    types="(cities)"
+                    placeholder="Saisissez votre localisation"
+                    @:placechanged="autocompleteLocation"
+                    @:error="handleError"
+                  ></vue-google-autocomplete>
                 </v-col>
 
                 <v-col cols="6">
@@ -100,9 +104,14 @@
   </template>
 
 <script>
+
 import axios from 'axios';
+import VueGoogleAutocomplete from '../../node_modules/vue-google-autocomplete/src/VueGoogleAutocomplete.vue';
 
 export default {
+  components: {
+    VueGoogleAutocomplete,
+  },
   data() {
     return {
       user: {
@@ -161,10 +170,41 @@ export default {
           console.log(error);
         });
     },
+
+    /**
+        * When the location found
+        * @param {Object} addressData Data of the found location
+        */
+    autocompleteLocation(addressData) {
+      this.user.location = addressData.formatted_address;
+    },
+    handleError(error) {
+      this.$toast.error(error.message);
+    },
   }
 };
 </script>
 
 <style lang="scss" scoped>
+
+#location {
+  width: 100%;
+  height: 72%;
+  background-color: #F6F6F6;
+  border-bottom: solid 1px lightgray;
+  border-bottom-color: #A5A5A5;
+  border-radius: 5px 5px 0 0;
+}
+
+#location:hover {
+  background-color: #e9e9e9;
+  border-bottom: solid 1px lightgray;
+  border-bottom-color: black;
+}
+
+#location:placeholder-shown {
+  padding-left: 12px;
+  font-size: medium;
+}
 
 </style>
