@@ -17,8 +17,8 @@
           <router-link to="/connection">
             <v-btn color="white" text>Se connecter</v-btn>
           </router-link>
-          <v-btn color="white" text @click="logout">Se deconnecter</v-btn>
-          <v-btn color="white" text to="/profil">Profil</v-btn>
+          <v-btn v-if="isConnected" color="white" text @click="logout">Se deconnecter</v-btn>
+          <v-btn v-if="isConnected" color="white" text to="/profil">Profil</v-btn>
         </v-app-bar>
       </v-app>
 
@@ -75,7 +75,13 @@ export default {
       searchDebounced: null,
       showResults: false,
       showOverlay: false,
+
     };
+  },
+  computed: {
+    isConnected() {
+      return localStorage.getItem('token') !== null;
+    }
   },
   watch: {
     searchQuery: function(newQuery) {
@@ -135,8 +141,8 @@ export default {
     },
     logout() {
       localStorage.removeItem('token');
-      this.$router.push('/connection');
-    }
+      window.location.replace('http://127.0.0.1:5173/');
+    },
   }
 };
 </script>
