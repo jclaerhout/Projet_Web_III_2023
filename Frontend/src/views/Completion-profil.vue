@@ -60,10 +60,14 @@
                 </v-col>
 
                 <v-col cols="6">
-                  <v-text-field
+                  <vue-google-autocomplete
+                    id="location"
+                    ref="location"
                     v-model="user.location"
                     label="Localisation"
-                  ></v-text-field>
+                    @:placechanged="autocompleteLocation"
+                    @:error="handleError"
+                  ></vue-google-autocomplete>
                 </v-col>
 
                 <v-col cols="6">
@@ -101,9 +105,14 @@
   </template>
 
 <script>
+
 import axios from 'axios';
+import VueGoogleAutocomplete from '../../node_modules/vue-google-autocomplete/src/VueGoogleAutocomplete.vue';
 
 export default {
+  components: {
+    VueGoogleAutocomplete,
+  },
   data() {
     return {
       user: {
@@ -161,6 +170,17 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+
+    /**
+        * When the location found
+        * @param {Object} addressData Data of the found location
+        */
+    autocompleteLocation(addressData) {
+      this.user.location = addressData.formatted_address;
+    },
+    handleError(error) {
+      this.$toast.error(error.message);
     },
   }
 };
