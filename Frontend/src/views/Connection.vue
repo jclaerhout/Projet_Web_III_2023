@@ -77,7 +77,6 @@ import axios from 'axios'
           .then(response => {
             localStorage.setItem('token', response.data.token);
             console.log(response.data);
-
             window.location.replace('http://127.0.0.1:5173/profil');
           })
           .catch(error => {
