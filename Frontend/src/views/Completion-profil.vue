@@ -19,7 +19,6 @@
                     v-model="user.firstname"
                     label="Prénom"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
@@ -28,7 +27,6 @@
                     v-model="user.lastname"
                     label="Nom"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
@@ -38,7 +36,6 @@
                     type="date"
                     label="Date de naissance"
                     :rules="[rules.required]"
-                    clearable
                   ></v-text-field>
                 </v-col>
 
@@ -65,6 +62,8 @@
                     ref="location"
                     v-model="user.location"
                     label="Localisation"
+                    types="(cities)"
+                    placeholder="Saisissez votre localisation"
                     @:placechanged="autocompleteLocation"
                     @:error="handleError"
                   ></vue-google-autocomplete>
@@ -187,5 +186,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+#location {
+  width: 100%;
+  height: 72%;
+  background-color: #F6F6F6;
+  border-bottom: solid 1px lightgray;
+  border-bottom-color: #A5A5A5;
+  border-radius: 5px 5px 0 0;
+}
+
+#location:hover {
+  background-color: #e9e9e9;
+  border-bottom: solid 1px lightgray;
+  border-bottom-color: black;
+}
+
+#location:placeholder-shown {
+  padding-left: 12px;
+  font-size: medium;
+}
 
 </style>
