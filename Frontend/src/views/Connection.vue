@@ -8,8 +8,8 @@
           @submit.prevent="submitForm"
         >
           <v-text-field
-            type="email"
             v-model="email"
+            type="email"
             :readonly="loading"
             :rules="[required]"
             class="mb-2"
@@ -19,8 +19,8 @@
           ></v-text-field>
 
           <v-text-field
-            type="password"
             v-model="password"
+            type="password"
             :readonly="loading"
             :rules="[required]"
             clearable

@@ -34,8 +34,8 @@
 
                 <v-col cols="6">
                   <v-text-field
-                    type="date"
                     v-model="user.birthdate"
+                    type="date"
                     label="Date de naissance"
                     :rules="[rules.required]"
                     clearable
@@ -43,10 +43,11 @@
                 </v-col>
 
                 <v-col cols="6">
-                  <v-text-field
+                  <v-select
                     v-model="user.sexe"
                     label="Sexe"
-                  ></v-text-field>
+                    :items="['Homme', 'Femme', 'Autre']"
+                  ></v-select>
                 </v-col>
 
                 <v-col cols="12">
