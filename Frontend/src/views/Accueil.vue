@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="accueil">
-    <h1>Site de partages photos</h1>
+    <h1>Site de partage photo</h1>
     <p>Description de mon site</p>
   </div>
 </template>

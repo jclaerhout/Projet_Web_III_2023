@@ -15,7 +15,7 @@ exports.getAllUsers = async(req, res) =>{
     try{
       conn = await pool.getConnection();
       const rows = await conn.query('SELECT * from users')
-      console.log(rows);
+      //console.log(rows);
       const jsonS = JSON.stringify(rows);
       res.writeHead(200, {'Content-type': 'text/html'})
       res.end(jsonS);
@@ -32,15 +32,29 @@ exports.getAllUsers = async(req, res) =>{
     const token = authHeader && authHeader.split(" ")[1];
     const decoded = jwt.verify(token, 'your_secret_key');
     const userId = decoded.id;
-    console.log(userId);
-    console.log(decoded.exp);
+    //console.log(userId);
+    //console.log(decoded.exp);
     try {
       conn = await pool.getConnection();
       const results = await pool.query(`SELECT * FROM users WHERE id = ?`, [userId]);
       console.log(results);
       if (results.length > 0) {
         const user = results[0];
-        res.json({ name: user.name, email: user.email });
+        if (user.birthdate === null) {
+          user.birthdate = '';
+        } else {
+          user.birthdate = user.birthdate.toISOString().split('T')[0];
+        }
+        res.json({ id: user.id,
+                   name: user.name,
+                   firstname: user.firstname,
+                   birthdate: user.birthdate,
+                   email: user.email,
+                   sexe: user.sexe,
+                   location: user.location,
+                   favoriteEquipment: user.favoriteEquipment,
+                   xpPro: user.xpPro
+                  });
       } else {
         res.status(404).send('User not found');
       }

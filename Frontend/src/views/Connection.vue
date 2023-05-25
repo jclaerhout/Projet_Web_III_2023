@@ -8,8 +8,8 @@
           @submit.prevent="submitForm"
         >
           <v-text-field
-            type="email"
             v-model="email"
+            type="email"
             :readonly="loading"
             :rules="[required]"
             class="mb-2"
@@ -19,8 +19,8 @@
           ></v-text-field>
 
           <v-text-field
-            type="password"
             v-model="password"
+            type="password"
             :readonly="loading"
             :rules="[required]"
             clearable
@@ -35,7 +35,7 @@
             :disabled="!form"
             :loading="loading"
             block
-            color="success"
+            color="hsla(160, 100%, 37%, 1)"
             size="large"
             type="submit"
             variant="elevated"
@@ -49,7 +49,7 @@
     <v-btn
       to="/inscription"
       block
-      color="success"
+      color="hsla(160, 100%, 37%, 1)"
       size="large"
       variant="elevated"
       >
@@ -71,7 +71,7 @@ import axios from 'axios'
       
       methods: {
         submitForm() {
-          axios.post('http://localhost:3000/api/auth/login', {
+          axios.post('http://localhost:3000/api/user/login', {
             email: this.email,
             password: this.password
           })
