@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="connection">
     <v-sheet class="bg-deep-green pa-12" rounded>
@@ -68,7 +67,7 @@ import axios from 'axios'
           password: ''
         };
       },
-      
+
       methods: {
         submitForm() {
           axios.post('http://localhost:3000/api/user/login', {
@@ -78,7 +77,7 @@ import axios from 'axios'
           .then(response => {
             localStorage.setItem('token', response.data.token);
             console.log(response.data);
-            this.$router.push('/profil');
+            window.location.replace('http://127.0.0.1:5173/profil');
           })
           .catch(error => {
             console.error(error);

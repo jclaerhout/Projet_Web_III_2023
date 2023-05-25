@@ -22,6 +22,10 @@ exports.getAllUsers = async(req, res) =>{
     }
     catch(e){
       console.log(e);
+    } finally {
+      if (conn) {
+        conn.release();
+      }
     }
   };
   
