@@ -1,7 +1,9 @@
 const fs = require('fs');
+const multer  = require('multer')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../pool');
+const path = require("path");
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -72,8 +74,18 @@ exports.getUserId = async (req, res) => {
 };
 
 exports.addPhoto = async (req, res, next) => {
-    const { userId, link, description} = req.body
+    const { userId, link, description } = req.body
     let conn;
+    const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../photo'); // Specify the folder where you want to save the uploaded files
+    },
+    filename: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + Date.now() + ext);
+    }
+});
+    const upload = multer({ storage: storage })
     try{
         conn = await pool.getConnection();
         const [row] = await pool.query(

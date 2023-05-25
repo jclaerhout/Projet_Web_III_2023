@@ -3,7 +3,7 @@
     <h1>Ajout de photo</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <input id="input" type="file" ref="fileInput" @change="selectPhoto">
+      <input id="input" type="file" ref="fileInput" @change="selectPhoto" accept="image/*">
       <button @click="addPhoto">Ajouter une Image</button>
     </div>
   </div>
