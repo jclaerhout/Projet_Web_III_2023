@@ -6,7 +6,6 @@
           <router-link to="/">
             <v-img id="logo" src="img/appareil-photo.png" height="64" width="64" max-height="64"></v-img>
           </router-link>
-          <v-spacer></v-spacer>
           <v-text-field
             v-model="searchQuery"
             placeholder="Recherche"
