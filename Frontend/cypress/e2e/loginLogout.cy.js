@@ -2,6 +2,9 @@ describe('Logout the user', () => {
 
   it('should go to the connection page and connect to test@test.com with pwd: test', () => {
     cy.visit('/')
+    cy.get('a[href="/connection"]').should('exist')
+    cy.get('.v-btn:contains("Se deconnecter")').should('not.exist')
+    cy.get('.v-btn:contains("Profil")').should('not.exist')
     cy.get('a[href="/connection"]').click()
     cy.url().should('include', '/connection')
 
@@ -17,6 +20,9 @@ describe('Logout the user', () => {
     
     cy.getAllLocalStorage().then((localStorage) => {
       if (localStorage.token) {
+        cy.get('a[href="/connection"]').should('not.exist')
+        cy.get('.v-btn:contains("Se deconnecter")').should('exist')
+        cy.get('.v-btn:contains("Profil")').should('exist')
         // User is connected with a token
         expect(localStorage.token).to.exist;
         cy.get('.v-btn:contains("Se deconnecter")').click();
