@@ -14,7 +14,7 @@
             @focus="handleSearchFocus"
             @blur="hideOverlay"
           ></v-text-field>
-          <router-link to="/connection">
+          <router-link v-if="!isConnected" to="/connection">
             <v-btn color="white" text>Se connecter</v-btn>
           </router-link>
           <v-btn v-if="isConnected" color="white" text @click="logout">Se deconnecter</v-btn>
