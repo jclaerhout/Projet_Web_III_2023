@@ -7,9 +7,12 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4 style="font-size:x-large;">{{ user.name }} {{ user.firstname }}</h4>
-                      <p style="color:rgb(7, 144, 241);">{{ user.email }}</p>
-                      <p style="">{{ user.location }}</p>
+                      <h4 v-if="user.name || user.firstname" style="font-size:x-large;">{{ user.name }} {{ user.firstname }}</h4>
+                      <h4 v-else style="font-size:x-large;">Utilisateur{{ user.id }}</h4>
+                      <p v-if="user.email" style="color:rgb(7, 144, 241);">{{ user.email }}</p>
+                      <p v-else style="color:rgb(7, 144, 241);">Pas d'email renseigné</p>
+                      <p v-if="user.location" style="">{{ user.location }}</p>
+                      <p v-else>Pas de lieu renseigné</p>
                       <v-btn color="green">Follow</v-btn>
                       <v-btn color="green">Message</v-btn>
                     </div>
