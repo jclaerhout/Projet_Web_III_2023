@@ -145,7 +145,7 @@ methods: {
   getUser() {
     const token = localStorage.getItem('token');
     axios
-      .get('http://localhost:3000/api/user/getUserId', {
+      .get('https://photo-pro-backend.vercel.app/api/user/getUserId', {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -158,7 +158,7 @@ methods: {
   },
 
   updateUser() {
-      axios.put('http://localhost:3000/api/user/updateUser', {
+      axios.put('https://photo-pro-backend.vercel.app/api/user/updateUser', {
         userId: this.userId,
         firstname: this.user.firstname,
         lastname: this.user.lastname,

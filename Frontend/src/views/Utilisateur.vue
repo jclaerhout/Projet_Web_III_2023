@@ -68,7 +68,7 @@ import axios from 'axios';
     methods: {
         async fetchUser() {
             const userId = this.$route.params.userId;
-            await axios.get(`http://localhost:3000/api/user`, {
+            await axios.get(`https://photo-pro-backend.vercel.app/api/user`, {
                 params: {
                     userId: userId,
                 },

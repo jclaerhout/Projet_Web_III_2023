@@ -53,7 +53,7 @@ import axios from 'axios'
     },
 
     mounted() {
-      axios.get('http://localhost:3000/api/page')
+      axios.get('https://photo-pro-backend.vercel.app/api/page')
         .then(response => {
          // handle success
           console.log(response.data)

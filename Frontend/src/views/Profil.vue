@@ -49,7 +49,7 @@
         const token = localStorage.getItem('token');
 
         axios
-      .get('http://localhost:3000/api/page/profil', {
+      .get('https://photo-pro-backend.vercel.app/api/page/profil', {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => {
