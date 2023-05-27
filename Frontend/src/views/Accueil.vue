@@ -7,7 +7,7 @@
       <v-container fluid fill-height>
         <v-row align="center" justify="center">
           <v-col cols="12" class="text-center">
-            <h1 class="title">Bienvenue sur la plateforme Photo Pro</h1>
+            <h1 class="title">Photo Pro</h1>
           </v-col>
           <v-col cols="12" class="text-center">
             <v-btn color="#00bd7e" class="mt-4" size="large" @click="scrollToContent">
@@ -125,7 +125,7 @@ import axios from 'axios'
     padding: 2rem 1rem;*/
     color: #111;
     font-family: 'Helvetica Neue', sans-serif;
-    font-size: 275px;
+    font-size: 210px;
     font-weight: bold;
     letter-spacing: -1px;
     line-height: 1;
