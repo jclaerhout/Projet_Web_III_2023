@@ -117,12 +117,19 @@ import axios from 'axios'
   }
 
   .title {
-    font-size: 36px;
+    /*font-size: 36px;
     font-weight: bold;
     background-color: rgba(182, 182, 184, 0.8);
     border-radius: 2rem;
     border: 2px solid black;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem;*/
+    color: #111;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 275px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: center;
   }
 }
 </style>
