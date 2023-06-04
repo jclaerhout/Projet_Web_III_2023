@@ -3,8 +3,10 @@
     <h1>Ajout de photo</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <input id="input" type="file" ref="fileInput" @change="selectPhoto" accept="image/*">
-      <button @click="addPhoto">Ajouter une Image</button>
+      <form method="post">
+        <input id="input" type="file" @change="onFileSelected" ref="fileInput" accept="image/*">
+        <input type="submit" @click="uploadPhoto; addPhoto">
+      </form>
     </div>
   </div>
 </template>
@@ -19,7 +21,7 @@ export default {
       link: '',
       description: '',
       loading: true,
-      photo: null,
+      selectedFile: null,
     };
   },
   mounted() {
@@ -57,10 +59,17 @@ export default {
             console.log(error);
           });
     },
-    selectPhoto(){
-      this.photo = this.$refs.fileInput.files[0];
-      console.log(this.photo);
-      }
+    onFileSelected(event) {
+      console.log(this.selectedFile = event.target.files[0]);
+    },
+    uploadPhoto(){
+      const fd = new FormData();
+      fd.append('image', this.selectedFile,this.selectedFile.name)
+      axios.post('http://localhost:3000/api/auth/uploadPhoto', fd)
+          .then(res => {
+            console.log(res)
+          })
     }
+  }
 };
 </script>

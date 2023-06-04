@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const userCtrl = require('../controllers/user');
+const userPhoto = require('../controllers/Ajout-photo');
+
+const upload = multer({ dest: '../photo' });
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/getUserId', userCtrl.getUserId);
-router.put('/selectPhoto', userCtrl.selectPhoto);
-router.put('/addPhoto', userCtrl.addPhoto);
-router.post('/photo', userCtrl.addPhoto);
+router.put('/addPhoto', userPhoto.addPhoto);
+router.post('/uploadPhoto', upload.single('image'), (req, res) => {
+    res.status(200).json({ message: 'Photo uploaded successfully' });
+});
 
 module.exports = router;
