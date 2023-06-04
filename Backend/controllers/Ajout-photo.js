@@ -5,30 +5,6 @@ const jwt = require('jsonwebtoken');
 const pool = require('../pool');
 const path = require("path");
 
-
-exports.getUserId = async (req, res) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, 'your_secret_key');
-    const userId = decoded.id;
-    console.log(userId);
-    //console.log(decoded.exp);
-    res.json({ userId });
-};
-
-exports.storage = async (req, res) => {
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, '../photo');
-        },
-        filename: (req, file, cb) => {
-            console.log(file);
-            cb(null, Date.now() + path.extname(file.originalname));
-        },
-    });
-    const upload = multer({storage: storage});
-}
-
 exports.addPhoto = async (req, res, next) => {
     const { userId, link, description } = req.body
     let conn;
@@ -53,9 +29,11 @@ exports.addPhoto = async (req, res, next) => {
         if (conn) await conn.release();
     }
 };
-
-exports.uploadPhoto = function(req, res) {
-    const fd = new FormData();
-    fd.append('image', req.file);
-    res.sendStatus(200);
+exports.uploadPhoto = async (req, res, next) => {
+    const uploadPhoto = multer({
+        storage: fileStorage,
+        limits: {
+            fileSize: 1000000
+        }
+    })
 };

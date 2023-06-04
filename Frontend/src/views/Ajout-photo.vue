@@ -3,9 +3,9 @@
     <h1>Ajout de photo</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <form method="post">
+      <form>
         <input id="input" type="file" @change="onFileSelected" ref="fileInput" accept="image/*">
-        <input type="submit" @click="uploadPhoto; addPhoto">
+        <input type="submit" @click="addPhoto(); uploadPhoto()">
       </form>
     </div>
   </div>
@@ -62,6 +62,7 @@ export default {
     onFileSelected(event) {
       console.log(this.selectedFile = event.target.files[0]);
     },
+
     uploadPhoto(){
       const fd = new FormData();
       fd.append('image', this.selectedFile,this.selectedFile.name)
@@ -70,6 +71,7 @@ export default {
             console.log(res)
           })
     }
-  }
+    }
 };
+
 </script>
