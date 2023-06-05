@@ -1,19 +1,17 @@
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require('../pool');
+const con = require('../conn');
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const { name, firstname, birthdate, email, sexe, location, favoriteEquipment, xpPro } = req.body;
-            let conn;
-            try{
-                conn = pool.getConnection();
-                const rows = pool.query(
-                    'INSERT INTO users (name, firstname, birthdate, email, password, sexe, location, favoriteEquipment, xpPro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-                    [name, firstname, birthdate, email, hash, sexe, location, favoriteEquipment, xpPro],
-                    (error, results) => {
+            const sql = 'INSERT INTO dev3.users (name, firstname, birthdate, email, password, sexe, location, favoriteEquipment, xpPro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            con.query(
+                sql,
+                [name, firstname, birthdate, email, hash, sexe, location, favoriteEquipment, xpPro],
+                (error, results) => {
                     if (error) {
                         console.error(error);
                         res.status(500).send('Erreur de sauvegarde de l utilisateur');
@@ -21,51 +19,53 @@ exports.signup = (req, res, next) => {
                         console.log(results);
                         res.send('Utilisateur sauvegardé');
                     }
-                    })
-            }
-            catch(e){
-            console.log(e);
-            }
+                }
+            );  
         });
 };
 
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
-    let conn;
-    try{
-        conn = await pool.getConnection();
-        const [row] = await pool.query(
-            'SELECT * FROM users WHERE email = ?', [email]
-        );
-        const user = row;
+    const sql = 'SELECT * FROM dev3.users WHERE email = ?';
+    con.query(
+        sql,
+        [email],
+        (error, results) => {
+            if (error) {
 
-        if (!user) {
-            return res.status(404).json({ message: "L'email ou le mot de passe est incorrect." });
+                console.error(error);
+                res.status(500).send('Erreur de connexion de l utilisateur');
+
+            } else {
+                console.log(results);
+                if (results.length > 0) {
+                    const user = results[0];
+
+                    bcrypt.compare(password, user.password)
+                        .then(valid => {
+
+                            if (!valid) {
+                                return res.status(401).json({ error: 'Mot de passe incorrect !' });
+                            }
+
+                            const token = jwt.sign({ id: user.id }, 'your_secret_key', { expiresIn: '1h' });
+                            return res.json({ token });
+
+                        })
+                        .catch(error => res.status(500).json({ error }));
+                } else {
+                    res.status(404).send('User not found');
+                }
+            }
         }
-
-        const match = await bcrypt.compare(password, user.password);
-
-        if (!match) {
-            return res.status(400).json({ message: "L'email ou le mot de passe est incorrect." });
-        }
-
-        const token = jwt.sign({ id: user.id }, 'your_secret_key', { expiresIn: '1h' });
-
-        return res.json({ token });
-    }
-    catch(e){
-        console.log(e);
-    }
-    finally {
-        if (conn) conn.release();
-    }
+    );
 };
 
 exports.recherche = async (req, res, next) => {
     const query = req.query.search;
     let conn;
     try{
-        conn = await pool.getConnection();
+        conn = await con.getConnection();
         const result = await conn.query(
             `SELECT id, name, firstname, email,
                 CASE 
@@ -91,54 +91,45 @@ exports.recherche = async (req, res, next) => {
 
 exports.fetchUser = async (req, res, next) => {
     const query = req.query.userId;
-    let conn;
-    try{
-        conn = await pool.getConnection();
-        const queryResult = await conn.query('SELECT u.id, u.name, u.firstname, u.email, u.location, p.link, p.description from users u left join pictures p on u.id = p.id_user WHERE u.id LIKE ? order by link desc', [`${query}`])
-        const user = queryResult[0];
-        console.log(user);
-        res.json(user);
-      }
-      catch(e){
-        console.log(e);
-      } finally {
-        if (conn) {
-          conn.release();
+    const sql = 'SELECT u.id, u.name, u.firstname, u.email, u.location, p.link, p.description from users u left join pictures p on u.id = p.id_user WHERE u.id LIKE ? order by link desc';
+    con.query(
+        sql,
+        [`${query}`],
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Erreur de connexion de l utilisateur');
+            } else {
+                const user = queryResult[0];
+                console.log(user);
+                res.json(user);
+            }
         }
-      }
-}
+    );
+};
 
 exports.getUserId = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const decoded = jwt.verify(token, 'your_secret_key');
     const userId = decoded.id;
-    //console.log(userId);
-    //console.log(decoded.exp);
     res.json({ userId });
   };
 
 exports.updateUser = async (req, res, next) => {
     const { userId, lastname, firstname, birthdate, sexe, location, favoriteEquipment, xpPro } = req.body;
-    let conn;
-    try{
-        conn = await pool.getConnection();
-        const [row] = await pool.query(
-            'UPDATE users SET name = ?, firstname = ?, birthdate = ?, sexe = ?, location = ?, favoriteEquipment = ?, xpPro = ? WHERE id = ?', 
-            [lastname, firstname, birthdate, sexe, location, favoriteEquipment, xpPro, userId.userId]
-        );
-        const user = row;
-
-        if (!user) {
-            return res.status(404).json({ message: "L'utilisateur n'existe pas." });
+    const sql = 'UPDATE dev3.users SET name = ?, firstname = ?, birthdate = ?, sexe = ?, location = ?, favoriteEquipment = ?, xpPro = ? WHERE id = ?';
+    con.query(
+        sql,
+        [lastname, firstname, birthdate, sexe, location, favoriteEquipment, xpPro, userId.userId],
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Erreur de mise à jour de l utilisateur');
+            } else {
+                console.log(results);
+                res.send('Utilisateur mis à jour');
+            }
         }
-
-        return res.json({ message: "L'utilisateur a été mis à jour." });
-    }
-    catch(e){
-        console.log(e);
-    }
-    finally {
-        if (conn) conn.release();
-    }
+    );
 };
