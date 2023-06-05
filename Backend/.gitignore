@@ -14,7 +14,7 @@ dist-ssr
 coverage
 *.local
 
-pool.js
+.env
 
 /cypress/videos/
 /cypress/screenshots/
