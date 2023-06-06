@@ -1,12 +1,9 @@
 #app {
   font-family: "Roboto", sans-serif;
   color: hsla(0, 0%, 0%, 0.8);
+  max-width: 1280px;
   margin: 0 auto;
-  max-width: 1200px;
   padding: 0 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 0;
 }
 
@@ -29,8 +26,4 @@ a,
     place-items: center;
   }
 
-  #app {
-    grid-template-columns: 1fr 1fr;
-    padding: 2.8rem 2rem;
-  }
 }

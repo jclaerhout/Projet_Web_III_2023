@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div class="flex-container">
       <v-app id="navbar">
         <v-app-bar class="nav" color="hsla(160, 100%, 37%, 1)" dark>
@@ -156,6 +156,7 @@ export default {
   position: relative;
   z-index: 2;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

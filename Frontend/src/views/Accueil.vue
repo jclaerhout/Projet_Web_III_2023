@@ -93,36 +93,41 @@ import axios from 'axios'
 </script>
 
 <style lang="scss" scoped>
-.accueil-landing {
+  .accueil {
   position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0 auto;
 
-  .fullscreen-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    .accueil-landing {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    img {
-      object-fit: cover;
-      object-position: center;
-      width: 100%;
-      height: 100%;
+      .fullscreen-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+
+        img {
+          object-fit: cover;
+          object-position: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        background-color: rgba(182, 182, 184, 0.8);
+        border-radius: 2rem;
+        border: 2px solid black;
+        padding: 2rem 1rem;
+      }
     }
   }
-
-  .title {
-    font-size: 36px;
-    font-weight: bold;
-    background-color: rgba(182, 182, 184, 0.8);
-    border-radius: 2rem;
-    border: 2px solid black;
-    padding: 2rem 1rem;
-  }
-}
 </style>
