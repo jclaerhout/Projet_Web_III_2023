@@ -63,35 +63,39 @@ exports.login = async (req, res, next) => {
 
 exports.recherche = async (req, res, next) => {
     const query = req.query.search;
-    let conn;
-    try{
-        conn = await con.getConnection();
-        const result = await conn.query(
-            `SELECT id, name, firstname, email,
-                CASE 
-                    WHEN (name LIKE ?) THEN 'names'
-                    WHEN (firstname LIKE ? AND name NOT LIKE ?) THEN 'firstNames'
-                    WHEN (email LIKE ?) THEN 'emails'
-                END AS category
-            FROM users
-            WHERE (name LIKE ?) OR (firstname LIKE ? AND name NOT LIKE ?) OR (email LIKE ? AND name NOT LIKE ? AND firstname NOT LIKE ?);
-        `, [`${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`]);
-        const names = result.filter(row => row.category === 'names');
-        const firstNames = result.filter(row => row.category === 'firstNames');
-        const emails = result.filter(row => row.category === 'emails');
-        res.json({ names: names, firstNames: firstNames, emails: emails });
-    }
-    catch(e) { console.log(e) }
-    finally {
-        if (conn) {
-        conn.release();
+    const sql = `SELECT id, name, firstname, email,
+                    CASE 
+                        WHEN (name LIKE ?) THEN 'names'
+                        WHEN (firstname LIKE ? AND name NOT LIKE ?) THEN 'firstNames'
+                        WHEN (email LIKE ?) THEN 'emails'
+                    END AS category
+                FROM users
+                WHERE (name LIKE ?) OR (firstname LIKE ? AND name NOT LIKE ?) OR (email LIKE ? AND name NOT LIKE ? AND firstname NOT LIKE ?);
+                `;
+    con.query(
+        sql,
+        [`${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`, `${query}%`],
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Query error');
+            } else {
+                const names = results.filter(row => row.category === 'names');
+                const firstNames = results.filter(row => row.category === 'firstNames');
+                const emails = results.filter(row => row.category === 'emails');
+                res.json({ names: names, firstNames: firstNames, emails: emails });
+            }
         }
-    }
+    );
 };
 
 exports.fetchUser = async (req, res, next) => {
     const query = req.query.userId;
-    const sql = 'SELECT u.id, u.name, u.firstname, u.email, u.location, p.link, p.description from users u left join pictures p on u.id = p.id_user WHERE u.id LIKE ? order by link desc';
+    const sql = `SELECT u.id, u.name, u.firstname, u.email, u.location, p.link, p.description
+                    FROM users u
+                    LEFT JOIN pictures p ON u.id = p.id_user
+                    WHERE u.id LIKE ?
+                ORDER BY p.link DESC;`;
     con.query(
         sql,
         [`${query}`],
@@ -100,8 +104,7 @@ exports.fetchUser = async (req, res, next) => {
                 console.error(error);
                 res.status(500).send('Erreur de connexion de l utilisateur');
             } else {
-                const user = queryResult[0];
-                console.log(user);
+                const user = results[0];
                 res.json(user);
             }
         }
