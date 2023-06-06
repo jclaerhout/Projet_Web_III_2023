@@ -170,7 +170,6 @@ methods: {
       xpPro: this.user.xpPro
     })
     .then(response => {
-      console.log('Response received');
       console.log(response.data);
       this.$router.push('/profil');
     })
