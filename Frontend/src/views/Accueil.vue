@@ -7,7 +7,7 @@
       <v-container fluid fill-height>
         <v-row align="center" justify="center">
           <v-col cols="12" class="text-center">
-            <h1 class="title">Bienvenue sur la plateforme Photo Pro</h1>
+            <h1 class="title">Photo Pro</h1>
           </v-col>
           <v-col cols="12" class="text-center">
             <v-btn color="#00bd7e" class="mt-4" size="large" @click="scrollToContent">
@@ -53,7 +53,7 @@ import axios from 'axios'
     },
 
     mounted() {
-      axios.get('http://localhost:3000/api/page')
+      axios.get('https://photo-pro-backend.vercel.app/api/page')
         .then(response => {
          // handle success
           console.log(response.data)
@@ -117,12 +117,19 @@ import axios from 'axios'
   }
 
   .title {
-    font-size: 36px;
+    /*font-size: 36px;
     font-weight: bold;
     background-color: rgba(182, 182, 184, 0.8);
     border-radius: 2rem;
     border: 2px solid black;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem;*/
+    color: #111;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 210px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: center;
   }
 }
 </style>

@@ -19,7 +19,6 @@ exports.getAllUsers = async(req, res) =>{
                 console.error(error);
                 res.status(500).send('Erreur d\'affichage des utilisateurs');
             } else {
-                //console.log(results);
                 res.send(results);
             }
         }
@@ -32,7 +31,6 @@ exports.profil = async (req, res) => {
   const token = authHeader && authHeader.split(" ")[1];
   const decoded = jwt.verify(token, 'your_secret_key');
   const userId = decoded.id;
-  //console.log(userId);
   const sql = 'SELECT * FROM dev3.users WHERE id = ?';
   con.query(
     sql,
@@ -42,7 +40,6 @@ exports.profil = async (req, res) => {
             console.error(error);
             res.status(500).send('Erreur d\'affichage du profil');
         } else {
-            //console.log(results);
             res.send(results);
         }
     }

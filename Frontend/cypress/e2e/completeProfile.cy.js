@@ -38,5 +38,4 @@ describe('Test de l\'Us-7 -> completion de profil', () => {
     cy.get('p').contains('Equipement favori:').should('contain.text', 'Appareil photo');
     cy.get('p').contains('Experience professionnelle:').should('contain.text', 'J\'ai travaillé en tant que photographe professionnel pendant 5 ans.');
   })
-
 });

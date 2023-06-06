@@ -1,5 +1,7 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+
 
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
@@ -13,6 +15,9 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(cors({
+  origin: 'https://photo-pro.vercel.app/'
+}));
 
 app.use('/api/page',pageRoutes);
 app.use('/api/user', userRoutes);
