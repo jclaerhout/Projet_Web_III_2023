@@ -33,7 +33,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <h4 style="font-size:x-large;">Dernière photo publiée</h4>
-                    <p style="">{{ user.description }}</p>
+                    <p id="description" style="">{{ user.description }}</p>
                   </div>
                 </div>
               </div>
