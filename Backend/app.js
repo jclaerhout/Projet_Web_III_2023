@@ -6,6 +6,7 @@ const app = express();
 
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 app.use(cors(
   {
