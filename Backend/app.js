@@ -22,6 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use(express.json());
 app.use(cors({
   origin: 'https://photo-pro-backend.vercel.app/'
