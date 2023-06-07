@@ -13,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/Backend/controllers/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/controllers/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/middlewares/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/middlewares/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/middlewares/photo.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/middlewares/photo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/pool.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/pool.js" afterDir="false" />

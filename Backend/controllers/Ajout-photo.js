@@ -37,3 +37,22 @@ exports.uploadPhoto = async (req, res, next) => {
         }
     })
 };
+
+exports.getLink = async (req, res, next) => {
+    const { userId } = req.body;
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const [rows] = await pool.query(
+            'SELECT link from pictures WHERE id_user = ?',
+            [userId.userId]
+        );
+        // Récupération des noms de photos dans une variable
+        const photoNames = rows.map(row => row.link);
+        res.json(photoNames);
+    } catch (e) {
+        console.log(e);
+    } finally {
+        if (conn) conn.release();
+    }
+};

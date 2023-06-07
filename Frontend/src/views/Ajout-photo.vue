@@ -26,13 +26,14 @@ export default {
   },
   mounted() {
     this.getUser();
+    this.getLink();
   },
   methods: {
     getUser() {
       const token = localStorage.getItem('token');
       axios
           .get('http://localhost:3000/api/auth/getUserId', {
-            headers: { authorization: `Bearer ${token}` },
+            headers: {authorization: `Bearer ${token}`},
           })
           .then((response) => {
             this.userId = response.data;
@@ -63,15 +64,30 @@ export default {
       console.log(this.selectedFile = event.target.files[0]);
     },
 
-    uploadPhoto(){
+    uploadPhoto() {
       const fd = new FormData();
-      fd.append('image', this.selectedFile,this.selectedFile.name)
+      fd.append('image', this.selectedFile, this.selectedFile.name)
       axios.post('http://localhost:3000/api/auth/uploadPhoto', fd)
           .then(res => {
             console.log(res)
           })
+    },
+    getLink() {
+      axios
+          .post('http://localhost:3000/api/auth/getLink', {
+              userId: this.userId,
+          }
+          .then(response => {
+            const photoNames = response.data;
+            photoNames.forEach(photoName => {
+              const photo = document.createElement('img');
+              photo.src = `../photo/${photoName}`;
+              document.body.appendChild(photo);
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          }))
     }
-    }
-};
-
+}}
 </script>
