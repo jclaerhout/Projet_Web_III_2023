@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS users (
 id INT NOT NULL auto_increment,
 name VARCHAR(50) NOT NULL,
 firstname VARCHAR(50) NOT NULL,
-birthdate DATE NOT NULL,
+birthdate DATE NULL,
 email VARCHAR(255) NOT NULL UNIQUE,
 password VARCHAR(255) NOT NULL,
 sexe VARCHAR(50) NOT NULL,
