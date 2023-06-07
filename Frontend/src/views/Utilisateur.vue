@@ -33,7 +33,7 @@
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <h4 style="font-size:x-large;">Dernière photo publiée</h4>
-                    <p style="">{{ user.description }}</p>
+                    <p id="description" style="">{{ user.description }}</p>
                   </div>
                 </div>
               </div>
@@ -68,7 +68,7 @@ import axios from 'axios';
     methods: {
         async fetchUser() {
             const userId = this.$route.params.userId;
-            await axios.get(`http://localhost:3000/api/user`, {
+            await axios.get(`https://photo-pro-backend.vercel.app/api/user`, {
                 params: {
                     userId: userId,
                 },

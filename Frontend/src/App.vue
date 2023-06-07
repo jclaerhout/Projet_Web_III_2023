@@ -111,7 +111,7 @@ export default {
     },
     async search() {
       //Get request for the backend with the letters used in the searchbar as parameters
-      const response = await axios.get(`http://localhost:3000/api/user/search`, {
+      const response = await axios.get(`https://photo-pro-backend.vercel.app/api/user/search`, {
         params: {
           search: this.searchQuery,
         },
@@ -140,7 +140,7 @@ export default {
     },
     logout() {
       localStorage.removeItem('token');
-      window.location.replace('http://127.0.0.1:5173/');
+      window.location.replace('https://photo-pro.vercel.app/');
     },
   }
 };

@@ -58,10 +58,10 @@ export default {
   methods: {
     onSubmit() {
       // send a POST request to the server with the form data
-      axios.post('http://localhost:3000/api/user/signup', {
+      axios.post('https://photo-pro-backend.vercel.app/api/user/signup', {
         name: '',
         firstname: '',
-        birthdate: '0000-00-00',
+        birthdate: null,
         email: this.email,
         password: this.password,
         sexe: '',

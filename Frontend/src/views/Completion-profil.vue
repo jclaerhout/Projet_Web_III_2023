@@ -69,7 +69,7 @@
                   label="Localisation"
                   types="(cities)"
                   placeholder="Saisissez votre localisation"
-                  @:placechanged="autocompleteLocation"
+                  @placechanged="autocompleteLocation"
                 ></vue-google-autocomplete>
               </v-col>
 
@@ -145,7 +145,7 @@ methods: {
   getUser() {
     const token = localStorage.getItem('token');
     axios
-      .get('http://localhost:3000/api/user/getUserId', {
+      .get('https://photo-pro-backend.vercel.app/api/user/getUserId', {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -158,32 +158,30 @@ methods: {
   },
 
   updateUser() {
-      axios.put('http://localhost:3000/api/user/updateUser', {
-        userId: this.userId,
-        firstname: this.user.firstname,
-        lastname: this.user.lastname,
-        birthdate: this.user.birthdate,
-        sexe: this.user.sexe,
-        description: this.user.description,
-        location: this.user.location,
-        favoriteEquipment: this.user.favoriteEquipment,
-        xpPro: this.user.xpPro
-      })
-      .then(response => {
-        console.log(response.data);
-        this.$router.push('/profil');
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    axios.put('https://photo-pro-backend.vercel.app/api/user/updateUser', {
+      userId: this.userId,
+      firstname: this.user.firstname,
+      lastname: this.user.lastname,
+      birthdate: this.user.birthdate,
+      sexe: this.user.sexe,
+      description: this.user.description,
+      location: this.user.location,
+      favoriteEquipment: this.user.favoriteEquipment,
+      xpPro: this.user.xpPro
+    })
+    .then(response => {
+      console.log(response.data);
+      this.$router.push('/profil');
+    })
+    .catch(error => {
+      console.log(error);
+    });
   },
 
-  /**
-      * When the location found
-      * @param {Object} addressData Data of the found location
-      */
   autocompleteLocation(addressData) {
-    this.user.location = addressData.locality;
+    const city = addressData.locality;
+    const country = addressData.country;
+    this.user.location = city + ', ' + country;
   }
 }
 };
