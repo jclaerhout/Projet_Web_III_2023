@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profil">
     <v-sheet
       elevation="12"
       max-width="1000"
@@ -107,15 +107,20 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
+
   data() {
     return {
       user: null,
       loading: true,
-    };
+      dialog: false,
+      name: '',
+      description: ''
+    }
   },
+
   created() {
     const token = localStorage.getItem('token');
 
@@ -138,13 +143,84 @@ export default {
         console.error(error);
       });
   },
-};
+
+  methods: {
+    // Méthode pour ouvrir le dialog
+    openDialog() {
+      this.dialog = true
+    },
+
+    // Méthode pour fermer le dialog
+    closeDialog() {
+      this.dialog = false
+    },
+
+    // Méthode pour créer une galerie
+    createGallery() {
+      const token = localStorage.getItem('token');
+
+      axios
+        .post('http://localhost:3000/api/galleries', {
+          name: this.name,
+          description: this.description
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.closeDialog();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
+.profil {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
-.infoCard {
-  width: 600px;
+  .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1rem 2rem;
+
+    .text {
+      text-align: left;
+    }
+
+    #button {
+      margin-top: 1rem;
+    }
+  }
 }
 
+.gallerie {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  margin: 6rem 0;
+
+  h1 {
+    text-align: left;
+  }
+
+  &-category {
+    display: flex;
+    margin-top: 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .v-card-title {
+      padding: 1rem;
+    }
+  }
+}
 </style>

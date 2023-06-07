@@ -183,7 +183,6 @@ methods: {
     const country = addressData.country;
     this.user.location = city + ', ' + country;
   }
-
 }
 };
 </script>
