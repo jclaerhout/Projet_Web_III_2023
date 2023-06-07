@@ -140,7 +140,7 @@ export default {
     },
     logout() {
       localStorage.removeItem('token');
-      window.location.replace('https://photo-pro-backend.vercel.app/');
+      window.location.replace('https://photo-pro.vercel.app/');
     },
   }
 };
