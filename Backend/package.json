@@ -22,6 +22,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mariadb": "3.1.1",
+    "mysql": "^2.18.1",
     "nodemon": "2.0.22",
     "vuetify": "^3.2.2"
   }
