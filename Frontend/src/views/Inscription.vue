@@ -61,7 +61,7 @@ export default {
       axios.post('http://localhost:3000/api/user/signup', {
         name: '',
         firstname: '',
-        birthdate: '1000-01-01',
+        birthdate: null,
         email: this.email,
         password: this.password,
         sexe: '',

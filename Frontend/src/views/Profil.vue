@@ -12,7 +12,7 @@
       <div v-else>
         <v-row>
           <v-col cols="12">
-            <v-card>
+            <v-card class="infoCard">
               <v-card-text>
                 <v-row>
                   <v-col cols="6">
@@ -125,6 +125,13 @@ export default {
       })
       .then((response) => {
         this.user = response.data;
+        if (this.user[0].birthdate === null) {
+          this.user[0].birthdate = '';
+        } else {
+          const dateObj = new Date(this.user[0].birthdate);
+          const formatedDate = `${dateObj.getDate()}-${dateObj.getMonth()}-${dateObj.getFullYear()}`;
+          this.user[0].birthdate = formatedDate;
+        }
         this.loading = false;
       })
       .catch((error) => {
@@ -136,5 +143,8 @@ export default {
 
 <style lang="scss" scoped>
 
+.infoCard {
+  width: 600px;
+}
 
 </style>
