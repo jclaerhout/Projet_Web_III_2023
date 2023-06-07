@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const history = require('connect-history-api-fallback');
 const app = express();
 
 
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
-const path = require('path');
 
 app.use(cors(
   {
@@ -17,6 +17,7 @@ app.use(cors(
   }
 ));
 
+app.use(history());
 app.use(express.json());
 app.use('/api/page',pageRoutes);
 app.use('/api/user', userRoutes);
