@@ -35,7 +35,7 @@ const handler = (req, res) => {
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://photo-pro.vercel.app/'
+  origin: 'https://photo-pro-backend.vercel.app/'
 }));
 app.use(allowCors(handler));
 app.use('/api/page',pageRoutes);
