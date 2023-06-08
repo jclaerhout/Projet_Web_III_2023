@@ -5,7 +5,7 @@
     <div v-else>
       <form>
         <input id="input" type="file" @change="onFileSelected" ref="fileInput" accept="image/*">
-        <input type="submit" @click="addPhoto(); uploadPhoto()">
+        <input type="submit" @click="addPhoto(); uploadPhoto(); getLink()">
       </form>
     </div>
   </div>
@@ -72,10 +72,12 @@ export default {
             console.log(res)
           })
     },
-    getLink() {
-      axios
-          .post('http://localhost:3000/api/auth/getLink', {
-              userId: this.userId,
+    async getLink() {
+      await axios
+          .get('http://localhost:3000/api/auth/getLink', {
+              params: {
+                userId: this.userId,
+              },
           }
           .then(response => {
             const photoNames = response.data;

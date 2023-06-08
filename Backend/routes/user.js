@@ -13,6 +13,6 @@ router.put('/addPhoto', userPhoto.addPhoto);
 router.post('/uploadPhoto', upload.single('image'), userPhoto.uploadPhoto, (req, res) => {
     res.status(200).json({ message: 'Photo uploaded successfully' });
 });
-router.post('/getLink', userPhoto.getLink);
+router.get('/getLink', userPhoto.getLink);
 
 module.exports = router;

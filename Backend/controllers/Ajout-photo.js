@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../pool');
 const path = require("path");
+const {query} = require("express");
+const  fileStorage  = require('../middlewares/photo')
 
 exports.addPhoto = async (req, res, next) => {
     const { userId, link, description } = req.body
@@ -39,17 +41,17 @@ exports.uploadPhoto = async (req, res, next) => {
 };
 
 exports.getLink = async (req, res, next) => {
-    const { userId } = req.body;
+    const userId = req.query.userId;
     let conn;
     try {
         conn = await pool.getConnection();
-        const [rows] = await pool.query(
+        const result  = await pool.query(
             'SELECT link from pictures WHERE id_user = ?',
-            [userId.userId]
+            [userId]
         );
         // Récupération des noms de photos dans une variable
-        const photoNames = rows.map(row => row.link);
-        res.json(photoNames);
+        const photoNames = result.map(result => result.link);
+        res.json({ photoNames: photoNames });
     } catch (e) {
         console.log(e);
     } finally {
