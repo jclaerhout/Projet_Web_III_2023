@@ -106,7 +106,14 @@
     </div>
     <div class="profil-gallery">
       <h1>Mes Galleries Photos</h1>
-      <div class="dialog">
+      <!-- Section pour afficher les galeries de photos -->
+      <div class="list-gallery">
+        <v-card v-for="gallery in galleries" :key="gallery.id" class="flex-grow-1 d-flex flex-column" @click="selectGallery(gallery)">
+          <v-img :src="getRandomImage(gallery.name)" aspect-ratio="2/3" class="cover"></v-img>
+          <v-card-title class="align-end">{{ gallery.name }}</v-card-title>
+        </v-card>
+        <div class="dialog align-center">
+          <!-- Popup Ajout de gallerie -->
         <v-dialog v-model="dialog" max-width="500px">
           <v-card>
             <v-card-title>
@@ -125,17 +132,20 @@
         </v-dialog>
         <v-btn id="button" color="hsla(160, 100%, 37%, 1)" @click="openDialog">+ Gallerie</v-btn>
       </div>
-      <!-- Section pour afficher les galleries de photos -->
-      <div class="list-gallery">
-        <v-chip v-for="gallery in galleries" :key="gallery.id" @click="filterPhotosByGallery(gallery)">
-          {{ gallery.name }}
-        </v-chip>
       </div>
       <!-- Section pour afficher les photos filtrées -->
-      <div class="filtered-photos">
-        <v-card v-for="photo in filteredPhotos" :key="photo.id">
-          <!-- Affichage de la photo -->
-        </v-card>
+      <div class="gallery-content">
+        <div v-if="selectedGallery" class="gallery-description">
+          <h2>{{ selectedGallery.name }}</h2>
+          <p>{{ selectedGallery.description }}</p>
+          <v-btn color="error" size="x-small" id="btn" @click="deleteGallery(gallery)">Supprimer</v-btn>
+        </div>
+        <div class="gallery-images">
+          <h2 v-if="selectedGallery"> Images de la gallerie {{ selectedGallery.name }}</h2>
+          <v-card v-for="photo in filteredPhotos" :key="photo.id">
+            <!-- Affichage de la photo -->
+          </v-card>
+        </div>
       </div>
     </div>
   </div>
@@ -154,8 +164,20 @@ export default {
       name: '',
       description: '',
       galleries: [],
+      selectedGallery: '',
       filteredPhotos: []
     }
+  },
+
+  computed: {
+    // Méthode calculée pour obtenir une image aléatoire depuis Unsplash
+    getRandomImage() {
+      return (galleryName) => {
+        const query = encodeURIComponent(galleryName);
+        const apiUrl = `https://source.unsplash.com/featured/?${query}`;
+        return apiUrl;
+      };
+    },
   },
 
   created() {
@@ -236,7 +258,12 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-    }
+    },
+
+    // Méthode pour afficher les infos de la gallerie sélectionnée
+    selectGallery(gallery) {
+      this.selectedGallery = gallery;
+    },
   }
 }
 
@@ -244,29 +271,67 @@ export default {
 
 <style lang="scss" scoped>
 .profil {
-  display: flex;
-  flex-direction: column;
-  margin-top: 4rem;
+  padding: 6rem 0 2rem;
 
   &-infos {
+    display: grid;
+    grid-template-columns: 1fr;
     padding: 1rem 2rem;
     width: 600px;
+    margin-top: 2rem;
   }
 
   &-gallery {
-    display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     margin-top: 4rem;
-
-    .dialog {
-      #button {
-        margin-top: 1.5rem;
-      }
-    }
 
     .list-gallery {
       margin-top: 2rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: 150px;
+      height: 100%;
+
+      .dialog {
+        margin-left: 2rem;
+        display: flex;
+        #button {
+          margin-top: 1.5rem;
+        }
+      }
+    }
+
+    .gallery-content {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      margin: 6rem 0 4rem;
+      width: 100%;
+
+      h2 {
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      p {
+        text-align: left;
+      }
+
+      #btn {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 1rem;
+      }
+
+      .gallery-images {
+        margin-left: 2rem;
+
+        h2 {
+          text-align: center;
+        }
+      }
     }
   }
 }
