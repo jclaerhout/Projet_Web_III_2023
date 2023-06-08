@@ -1,11 +1,12 @@
 CREATE TABLE IF NOT EXISTS categories (
-id INT NOT NULL auto_increment,
+id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(50) NOT NULL UNIQUE,
 description VARCHAR(500),
 PRIMARY KEY (id)
 );
 
-INSERT INTO categories (name, description) VALUES ("Paysage", "photo de l'environement"),
+INSERT INTO categories (name, description) VALUES
+("Paysage", "photo de l'environnement"),
 ("Portrait", "Un portrait photographique est un portrait visuel d'une personne"),
 ("Animaux", "photo d'animaux"),
 ("Nourriture", "photo de nourriture"),
@@ -20,7 +21,7 @@ INSERT INTO categories (name, description) VALUES ("Paysage", "photo de l'enviro
 ("Autre", "photo d'autre");
 
 CREATE TABLE IF NOT EXISTS users (
-id INT NOT NULL auto_increment,
+id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(50) NOT NULL,
 firstname VARCHAR(50) NOT NULL,
 birthdate DATE NOT NULL,
@@ -34,22 +35,26 @@ PRIMARY KEY (id)
 );
 
 INSERT INTO users (name, firstname, birthdate, email, password, sexe, location, favoriteEquipment, xpPro)
-VALUES ("Doe", "John", "1968-01-01", "johndoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
+VALUES
+("Doe", "John", "1968-01-01", "johndoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
 ("Doe", "Jane", "1968-01-01", "janedoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
 ("Doe", "Jack", "1968-01-01", "jackdoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant"),
 ("Doe", "Jill", "1968-01-01", "jilldoe@gmail.com", "123456", "homme", "Paris", "Sony A7III", "Etudiant");
 
 CREATE TABLE IF NOT EXISTS roles (
-id INT NOT NULL auto_increment,
+id INT NOT NULL AUTO_INCREMENT,
 name VARCHAR(50) NOT NULL UNIQUE,
 description VARCHAR(500),
 PRIMARY KEY (id)
 );
 
-INSERT INTO roles (name, description) VALUES ("Admin", "Administrateur"), ("User", "Utilisateur"), ("Guest", "Invité");
+INSERT INTO roles (name, description) VALUES
+("Admin", "Administrateur"),
+("User", "Utilisateur"),
+("Guest", "Invité");
 
 CREATE TABLE IF NOT EXISTS pictures (
-id INT NOT NULL auto_increment,
+id INT NOT NULL AUTO_INCREMENT,
 id_user INT NOT NULL,
 link VARCHAR(255) NOT NULL UNIQUE,
 description VARCHAR(500),
@@ -57,7 +62,8 @@ PRIMARY KEY (id),
 FOREIGN KEY (id_user) REFERENCES users(id)
 );
 
-INSERT INTO pictures (id_user, link, description) VALUES (1, "link1", "description"),
+INSERT INTO pictures (id_user, link, description) VALUES
+(1, "link1", "description"),
 (2, "link2", "description"),
 (3, "link3", "description"),
 (4, "link4", "description");
@@ -70,7 +76,8 @@ FOREIGN KEY (id_follower) REFERENCES users(id),
 FOREIGN KEY (id_followed) REFERENCES users(id)
 );
 
-INSERT INTO relations (id_follower, id_followed) VALUES (1, 2),
+INSERT INTO relations (id_follower, id_followed) VALUES
+(1, 2),
 (1, 3),
 (1, 4),
 (2, 1),
@@ -84,16 +91,17 @@ INSERT INTO relations (id_follower, id_followed) VALUES (1, 2),
 (4, 3);
 
 CREATE TABLE IF NOT EXISTS comments (
-id INT NOT NULL auto_increment,
+id INT NOT NULL AUTO_INCREMENT,
 id_user INT NOT NULL,
 id_picture INT NOT NULL,
-DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id),
 FOREIGN KEY (id_user) REFERENCES users(id),
 FOREIGN KEY (id_picture) REFERENCES pictures(id)
 );
 
-INSERT INTO comments (id_user, id_picture, DATE) VALUES (1, 1, "2019-01-01 00:00:00"),
+INSERT INTO comments (id_user, id_picture, date) VALUES
+(1, 1, "2019-01-01 00:00:00"),
 (2, 1, "2019-01-01 00:00:00"),
 (3, 1, "2019-01-01 00:00:00"),
 (4, 1, "2019-01-01 00:00:00"),
@@ -118,7 +126,8 @@ FOREIGN KEY (id_user) REFERENCES users(id),
 FOREIGN KEY (id_picture) REFERENCES pictures(id)
 );
 
-INSERT INTO likes (id_user, id_picture) VALUES (1, 1),
+INSERT INTO likes (id_user, id_picture) VALUES
+(1, 1),
 (2, 1),
 (3, 1),
 (4, 1),
@@ -143,32 +152,36 @@ FOREIGN KEY (id_user) REFERENCES users(id),
 FOREIGN KEY (id_role) REFERENCES roles(id)
 );
 
-INSERT INTO users_roles (id_user, id_role) VALUES (1, 1),
+INSERT INTO users_roles (id_user, id_role) VALUES
+(1, 1),
 (2, 2),
 (3, 2),
 (4, 2);
 
-CREATE TABLE IF NOT EXISTS categories_pictures (
-id_categorie INT NOT NULL,
+CREATE TABLE IF NOT EXISTS galleries (
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+description VARCHAR(500),
+id_user INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (id_user) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS gallery_images (
+id_gallery INT NOT NULL,
 id_picture INT NOT NULL,
-PRIMARY KEY (id_categorie, id_picture),
-FOREIGN KEY (id_categorie) REFERENCES categories(id),
+PRIMARY KEY (id_gallery, id_picture),
+FOREIGN KEY (id_gallery) REFERENCES galleries(id),
 FOREIGN KEY (id_picture) REFERENCES pictures(id)
 );
 
-INSERT INTO categories_pictures (id_categorie, id_picture) VALUES (1, 1),
+INSERT INTO galleries (name, description, id_user) VALUES
+("Galerie 1", "Description galerie 1", 1),
+("Galerie 2", "Description galerie 2", 2),
+("Galerie 3", "Description galerie 3", 3);
+
+INSERT INTO gallery_images (id_gallery, id_picture) VALUES
+(1, 1),
 (1, 2),
-(1, 3),
-(1, 4),
-(2, 1),
-(2, 2),
 (2, 3),
-(2, 4),
-(3, 1),
-(3, 2),
-(3, 3),
-(3, 4),
-(4, 1),
-(4, 2),
-(4, 3),
-(4, 4);
+(3, 4);
