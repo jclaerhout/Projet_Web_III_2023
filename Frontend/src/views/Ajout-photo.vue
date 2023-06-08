@@ -6,7 +6,11 @@
       <form>
         <input id="input" type="file" @change="onFileSelected" ref="fileInput" accept="image/*">
         <input type="submit" @click="addPhoto(); uploadPhoto(); getLink()">
+        <button @click="getLink()">Test</button>
       </form>
+      <div id="image">
+      <v-img :src="link"></v-img>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +30,7 @@ export default {
   },
   mounted() {
     this.getUser();
-    this.getLink();
+    //this.getLink();
   },
   methods: {
     getUser() {
@@ -73,23 +77,27 @@ export default {
           })
     },
     async getLink() {
-      await axios
+      const response = await axios
           .get('http://localhost:3000/api/auth/getLink', {
               params: {
                 userId: this.userId,
               },
-          }
+          })
           .then(response => {
             const photoNames = response.data;
+            console.log(photoNames)
             photoNames.forEach(photoName => {
-              const photo = document.createElement('img');
-              photo.src = `../photo/${photoName}`;
-              document.body.appendChild(photo);
+              if (photoName !== '') {
+                const photo = document.createElement('img');
+                alert("ERRGZEGHRTRETHRTHREHTT");
+                photo.src = `../photo/${photoName}`;
+                document.getElementById('image').appendChild(photo)
+              }
             });
           })
           .catch(error => {
             console.error(error);
-          }))
+          })
     }
 }}
 </script>
